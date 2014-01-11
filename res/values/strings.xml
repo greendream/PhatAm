@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Phật âm</string>
+    <string name="action_settings">Settings</string>
+    <string name="search_title">Search</string>
+    <string name="search_hint">Từ khóa</string>
+    <string name="hello">Phật âm version 0.1.9</string>
+    <string name="github">GitHub</string>
+    <string name="more">Thêm</string>
+    <string name="github_label">SlidingMenu on GitHub</string>
+    <string name="title_bar_slide">Phật âm</string>
+    <string name="category_title">Phật âm</string>
+    
+    <string name="related_videos">Video liên quan</string>
+    <string name="same_author_videos">Video cùng Tác giả</string>
+    <string name="hot_videos">Video hay</string>
+    <string name="empty">Không có dữ liệu</string>
+    <string name="type_video_rating">Lượt xem</string>
+    <string name="type_video_date">Ngày</string>
+    <string name="type_video_title">Tiêu đề</string>
+    <string name="full_video_title">Thông tin chi tiết</string>
+    
+    <string name="category">Chuyên mục</string>
+    <string name="author">Tác giả</string>
+    <string name="top_videos">Video nổi Bật</string>
+    <string name="new_videos">Video mới</string>
+    <string name="random_videos">Video ngẫu nhiên</string>
+    <string name="contact">Liên hệ</string>
+
+    <string-array name="list_category_array">
+        <item>@string/category</item>
+        <item>@string/author</item>
+        <item>@string/top_videos</item>
+        <item>@string/new_videos</item>
+        <item>@string/random_videos</item>
+        <item>@string/contact</item>
+    </string-array>
+    
+    <string-array name="arr_cartegory_id">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>500</item>
+        <item>501</item>
+        <item>502</item>
+        <item>503</item>
+        <item>504</item>
+    </string-array>
+    <string-array name="arr_cartegory_name">
+        <item>Phật pháp nhiệm màu</item>
+        <item>Phim truyện</item>
+        <item>Phim tài liệu</item>
+        <item>Tân nhạc Phật Giáo</item>
+        <item>Cổ nhạc Phật giáo</item>
+        <item>Nhạc thiền</item>
+        <item>Ánh sáng Phật pháp</item>
+        <item>Kinh - Chú</item>
+        <item>Pháp thoại</item>
+        <item>Sách nói</item>
+        <item>Một ngày an lạc</item>
+        <item>Phim hoạt hình</item>
+    </string-array>
+    
+    <string name="setting_title">Công cụ</string>
+
+    <string-array name="list_setting_array">
+        <item>Cài đặt</item>
+        <item>Đóng ứng dụng</item>
+    </string-array>
+    <string-array name="detail_category_array">
+        <item>Kinh- Chú</item>
+        <item>Pháp thoại</item>
+        <item>Sách nói</item>
+        <item>Tân nhạc Phật giáo</item>
+        <item>Cổ nhạc Phật giáo</item>
+        <item>Nhạc thiền</item>
+        <item>Phim truyện</item>
+        <item>Phim tài liệu</item>
+        <item>Phật pháp nhiệm màu</item>
+        <item>Ánh sáng phật pháp</item>
+        <item>Một ngày an lạc</item>
+    </string-array>
+
+    <string name="pull_to_refresh_pull_label">Kéo xuống để làm mới...</string>
+    <string name="pull_to_refresh_release_label">Thả ra để làm mới...</string>
+    <string name="pull_to_refresh_refreshing_label">Đang Tải dữ liệu...</string>
+    <string name="pull_to_refresh_tap_label">Vui lòng đợi trong giây lát...</string>
+    <string name="load_more_post">Tải Thêm Dữ Liệu...</string>
+
+</resources>

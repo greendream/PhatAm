@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="nav_background">#262626</color>
+    <color name="green">#00FF00</color>
+    <color name="nav_press">#848484</color>
+    <color name="white">#ffffff</color>
+    <color name="list_row_green">#e2ffea</color>
+</resources>

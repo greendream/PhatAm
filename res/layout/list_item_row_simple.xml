@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/row_number"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:padding="1dp"
+        android:text="Medium Text"
+        android:layout_gravity="center"
+        android:textColor="@android:color/background_dark"
+        android:textAppearance="@android:style/TextAppearance.Holo.Large" />
+	
