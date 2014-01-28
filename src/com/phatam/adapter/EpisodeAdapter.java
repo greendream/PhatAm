@@ -22,27 +22,24 @@ import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.phatam.entity.Episode;
 import com.phatam.entity.VideoItem;
 
-public class ListVideoAdapter extends ArrayAdapter<VideoItem> {
+public class EpisodeAdapter extends ArrayAdapter<Episode> {
 
 	private final Activity mActivity;
-	private ArrayList<VideoItem> mListVideoModel;
+	private VideoItem mVideoItem;
+	private ArrayList<Episode> mEpisodeData;
 	DisplayImageOptions options;
 	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
 
-	static class ViewHolder {
-		public TextView name;
-		public TextView author;
-		public ImageView image;
-	}
-
-	public ListVideoAdapter(Activity activity, ArrayList<VideoItem> list_model) {
+	public EpisodeAdapter(Activity activity, VideoItem videoItem) {
 		// TODO Auto-generated constructor stub
-		super(activity, R.layout.list_item_video, list_model);
+		super(activity, R.layout.list_item_episode, videoItem.getEpisodes());
+		mVideoItem = videoItem;
 		this.mActivity = activity;
-		this.mListVideoModel = list_model;
+		this.mEpisodeData = videoItem.getEpisodes();
 		options = new DisplayImageOptions.Builder()
 //				.showImageOnLoading(R.drawable.ic_stub)
 				.showImageForEmptyUri(R.drawable.ic_empty)
@@ -56,27 +53,18 @@ public class ListVideoAdapter extends ArrayAdapter<VideoItem> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View rowView = convertView;
-		ViewHolder viewHolder;
+		
 		if (rowView == null) {
-			LayoutInflater inflater = (LayoutInflater) mActivity
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			rowView = inflater.inflate(R.layout.list_item_video, null);
-			viewHolder = new ViewHolder();
-			viewHolder.name = (TextView) rowView
-					.findViewById(R.id.video_list_title);
-			viewHolder.author = (TextView) rowView
-					.findViewById(R.id.video_list_astist);
-			viewHolder.image = (ImageView) rowView
-					.findViewById(R.id.video_list_image);
-			rowView.setTag(viewHolder);
+			LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			rowView = inflater.inflate(R.layout.list_item_episode, null);
 		}
-
-		viewHolder = (ViewHolder) rowView.getTag();
-		viewHolder.name.setText(mListVideoModel.get(position).getVideoTitle());
-		viewHolder.author.setText("Tác giả: " + mListVideoModel.get(position).getArtist());
-		imageLoader.displayImage(mListVideoModel.get(position).getYoutubeImage(),
-				viewHolder.image, options, animateFirstListener);
-
+			
+		((TextView) rowView.findViewById(R.id.episode_index)).setText("Phần " + mEpisodeData.get(position).getEpisodeId());
+		((TextView) rowView.findViewById(R.id.video_list_astist)).setText("Tác giả: " + mVideoItem.getArtist())	;
+		imageLoader.displayImage(mEpisodeData.get(position).getYoutubeThumb(),
+				((ImageView) rowView.findViewById(R.id.video_list_image)), options, animateFirstListener);
+		
+		
 		if (position % 2 == 0) {
 			rowView.setBackgroundColor(mActivity.getResources().getColor(
 					R.color.list_row_green));

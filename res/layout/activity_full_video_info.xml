@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/layoutVideo"
+        android:layout_width="match_parent"
+        android:layout_height="280px"
+        android:background="#000" >
+
+        <ImageView
+            android:id="@+id/ivVideoPreviewImage"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            android:background="@drawable/phat"
+            android:scaleType="fitXY"
+            android:visibility="gone"  />
+
+        <ImageButton
+            android:id="@+id/ibPlayButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/btn_big_play_xml"
+            android:gravity="center"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:id="@+id/videoPlayerPlace"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="2dp" />
+
+        <RelativeLayout
+            android:id="@+id/layoutPlayerMode"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_alignParentTop="true"
+            android:background="#A0000000"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                    <RelativeLayout
+                        android:id="@+id/rlMp3Mode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:text="MP3"
+                            android:textColor="#fff" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                    <RelativeLayout
+                        android:id="@+id/rlAutoMode"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:text="Auto"
+                            android:textColor="@color/blue" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                    <RelativeLayout
+                        android:id="@+id/rlVideoMode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:text="Video"
+                            android:textColor="#fff" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutPreviewInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#A0000000"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="8dp" >
+
+                <TextView
+                    android:id="@+id/tvPreviewVideoTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:shadowColor="#BB000000"
+                    android:shadowDx="+1"
+                    android:shadowDy="+1"
+                    android:shadowRadius="1"
+                    android:text="Xã hội công bằng"
+                    android:layout_marginTop="2dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#fff" />
+
+                <TextView
+                    android:id="@+id/tvPreviewVideoAuthor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Thích Chân Quang"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="6dp"
+                    android:textColor="@color/blue" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtNothing1"
+                android:layout_width="4dp"
+                android:layout_height="wrap_content" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingRight="8dp" >
+
+                <TextView
+                    android:id="@+id/tvPreviewVideoView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:maxLines="1"
+                    android:text="1200 lượt xem"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="6dp"
+                    android:textColor="#aaffffff" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/otherViews"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/horizontalThickSpliter"
+            android:layout_width="fill_parent"
+            android:layout_height="5dp"
+            android:background="@color/blue" />
+
+        <LinearLayout
+            android:id="@+id/customTabHost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="4dp" >
+
+                <Button
+                    android:id="@+id/btnEpisodeTab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#00000000"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:shadowColor="#44000000"
+                    android:shadowDx="+1"
+                    android:shadowDy="+1"
+                    android:shadowRadius="1"
+                    android:text="Các phần"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/verticalSpliter1"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/blue" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/btnVideoInfoTab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#00000000"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:shadowColor="#44000000"
+                    android:shadowDx="+1"
+                    android:shadowDy="+1"
+                    android:shadowRadius="1"
+                    android:text="Thông tin"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/blue" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/verticalSpliter2"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/blue" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/btnRelativeVideoTab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#00000000"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:shadowColor="#44000000"
+                    android:shadowDx="+1"
+                    android:shadowDy="+1"
+                    android:shadowRadius="1"
+                    android:text="Liên quan"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#000" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/rlEpisodeSelector"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp" >
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="2dp"
+                        android:layout_centerInParent="true"
+                        android:background="@color/blue" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/rlVideoInfoTabSelector"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="@color/blue" >
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="2dp"
+                        android:layout_centerInParent="true"
+                        android:background="@color/blue" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/rlRelativeVideoSelector"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp" >
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="2dp"
+                        android:layout_centerInParent="true"
+                        android:background="@color/blue" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:id="@+id/layoutEpisode"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <FrameLayout
+                    android:id="@+id/flEpisode"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutVideoInfo"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:visibility="visible" >
+
+                <ScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:text="Tên phim"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvVideoTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Xã hội công bằng"
+                                android:textAppearance="?android:attr/textAppearanceSmall" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:text="Tác giả"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvAuthor"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Thích Chân Quang"
+                                android:textAppearance="?android:attr/textAppearanceSmall" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:text="Thời lượng"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvVideoLength"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text=": --:--"
+                                android:textAppearance="?android:attr/textAppearanceSmall" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:text="Chuyên mục"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvCategoryName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text=": Pháp thoại"
+                                android:textAppearance="?android:attr/textAppearanceSmall" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:text="Lượt xem"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvYoutubeView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="2000"
+                                android:textAppearance="?android:attr/textAppearanceSmall" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_weight="2"
+                            android:text="Mô tả :"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_weight="1"
+                            android:autoLink="web"
+                            android:text="Mô tả nội dung"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <!-- Tag layout -->
+
+                        <LinearLayout
+                            android:id="@+id/tagList"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:orientation="vertical" >
+                        </LinearLayout>
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutRelativeVideo"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <FrameLayout
+                    android:id="@+id/flRelativeVideo"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:visibility="visible" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

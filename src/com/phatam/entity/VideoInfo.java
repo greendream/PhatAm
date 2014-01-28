@@ -11,6 +11,7 @@ public class VideoInfo {
 	protected String yt_thumb;
 	protected String mp3;
 	protected String category;
+	protected String submitted;
 
 	public int getId() {
 		return this.id;
@@ -44,13 +45,18 @@ public class VideoInfo {
 		return this.yt_thumb;
 	}
 
-	public int getSiteView() {
+	public int getYoutubeView() {
 		return this.site_views;
 	}
 
 	public String getMp3() {
 		return this.mp3;
 	}
+	
+	public String setSubbmited() {
+		return this.submitted;
+	}
+	
 	public void setVideoId(String id){
 		this.uniq_id = id;
 	}
@@ -79,5 +85,10 @@ public class VideoInfo {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+	
+	public void setSubbmited(String submitted) {
+		this.submitted = submitted;
+	}
+	
 	
 }

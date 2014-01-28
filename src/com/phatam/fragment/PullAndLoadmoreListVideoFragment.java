@@ -189,8 +189,9 @@ public class PullAndLoadmoreListVideoFragment extends SherlockFragment {
 				String yt_thumb = line_object.getString("yt_thumb");
 				int site_views = line_object.getInt("site_views");
 				String yt_id = line_object.getString("yt_id");
+				String category = line_object.getString("category");
 				VideoItem item = new VideoItem(uniq_id, artist, video_title,
-						description, yt_id, yt_thumb, site_views);
+						description, yt_id, yt_thumb, site_views, category);
 
 				mVideoItems.add(item);
 			}
@@ -224,6 +225,7 @@ public class PullAndLoadmoreListVideoFragment extends SherlockFragment {
 			mListVideoAdapter.notifyDataSetChanged();
 			mPullAndLoadListView.onLoadMoreComplete();
 			mPullAndLoadListView.onRefreshComplete();
+			mPullAndLoadListView.onRefresh();
 			super.onPostExecute(result);
 		}
 
@@ -269,7 +271,7 @@ public class PullAndLoadmoreListVideoFragment extends SherlockFragment {
 						mArrayListVideoItem.remove(mArrayListVideoItem.size() - 1);
 					}
 				}				
-				mArrayListVideoItem.addAll(arrPullToRefreshVideoPage);
+				mArrayListVideoItem.addAll(0, arrPullToRefreshVideoPage);
 			}
 			// We need notify the adapter that the data have been changed
 			mListVideoAdapter.notifyDataSetChanged();

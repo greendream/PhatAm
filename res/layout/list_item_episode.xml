@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+   	android:padding="5dp"
+   	android:background="@drawable/content_list_color">
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/thumbnail"
+        android:padding="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="2dp">
+        <ImageView 
+            android:id="@+id/video_list_image"
+            android:layout_width="110dp"
+            android:layout_height="60dp"/>
+    </LinearLayout>
+    <!--Title of Video -->
+    <TextView 
+        android:id="@+id/episode_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Phần 1"
+        android:textSize="16sp"
+        android:textColor="#000"/>
+	
+    <!-- Astist Name -->
+    <TextView 
+        android:id="@+id/video_list_astist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/episode_index"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Luan"
+        android:textSize="13sp"
+        android:textColor="#989393"
+        android:layout_marginTop="5dp"/>
+    
+</RelativeLayout>

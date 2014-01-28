@@ -99,7 +99,7 @@ public class PhatamSqliteHelper extends SQLiteOpenHelper {
 		values.put("description", video.getDescription());
 		values.put("yt_id", video.getYoutubeId());
 		values.put("yt_thumb", video.getYoutubeImage());
-		values.put("site_views", video.getSiteView());
+		values.put("site_views", video.getYoutubeView());
 		values.put("mp3", video.getMp3());
 
 		// insert row

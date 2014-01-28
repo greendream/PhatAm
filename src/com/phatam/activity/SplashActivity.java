@@ -1,13 +1,13 @@
 package com.phatam.activity;
 
-import com.phatam.R;
-import com.phatam.config.GlobalData;
-import com.phatam.lazyloading.ImageLoader;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.phatam.R;
+import com.phatam.config.GlobalData;
+import com.phatam.lazyloading.ImageLoader;
 
 public class SplashActivity extends Activity {
 	 
@@ -18,7 +18,6 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        
         GlobalData.imageLoader= new ImageLoader(this.getApplicationContext()); 
         
         new Handler().postDelayed(new Runnable() {

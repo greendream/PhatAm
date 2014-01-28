@@ -5,7 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="search_title">Search</string>
     <string name="search_hint">Từ khóa</string>
-    <string name="hello">Phật âm version 0.1.9</string>
+    <string name="str_version">Phật âm version 0.2.1</string>
     <string name="github">GitHub</string>
     <string name="more">Thêm</string>
     <string name="github_label">SlidingMenu on GitHub</string>
@@ -72,6 +72,7 @@
         <item>Cài đặt</item>
         <item>Đóng ứng dụng</item>
     </string-array>
+    
     <string-array name="detail_category_array">
         <item>Kinh- Chú</item>
         <item>Pháp thoại</item>
@@ -88,8 +89,10 @@
 
     <string name="pull_to_refresh_pull_label">Kéo xuống để làm mới...</string>
     <string name="pull_to_refresh_release_label">Thả ra để làm mới...</string>
-    <string name="pull_to_refresh_refreshing_label">Đang Tải dữ liệu...</string>
+    <string name="pull_to_refresh_refreshing_label">Đang tải dữ liệu...</string>
     <string name="pull_to_refresh_tap_label">Vui lòng đợi trong giây lát...</string>
-    <string name="load_more_post">Tải Thêm Dữ Liệu...</string>
+    <string name="load_more_post">Tải thêm dữ liệu...</string>
+    
+    <string name="error_player">Lỗi khởi tạo trình phát Video (%1$s)</string>
 
 </resources>

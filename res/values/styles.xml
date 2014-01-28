@@ -18,10 +18,24 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+    <style name="Theme.PhatAmActionBar" parent="Theme.Sherlock.Light">
+    	<item name="actionBarStyle">@style/Widget.PhatAmTheme.ActionBar</item>
+    </style>
+    
+    
+	<style name="Widget.PhatAmTheme.ActionBar" parent="Widget.Sherlock.ActionBar">
+    	<item name="android:background">@color/blue</item>
+    	<item name="background">@color/blue</item>
+	</style>
 
     <style name="AnimationPopup">
         <item name="@android:windowEnterAnimation">@anim/appear</item>
         <item name="@android:windowExitAnimation">@anim/disappear</item>
     </style>
 
+    <!-- #FF01C2D4 -->
+    <!-- 4bc1d2 -->
+    <color name="blue">#4bc1d2</color>
+    <color name="blue_effect">#aa4bc1d2</color>
 </resources>

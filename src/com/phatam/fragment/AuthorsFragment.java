@@ -37,6 +37,9 @@ import com.phatam.websevice.RestClient;
 
 @SuppressLint("NewApi")
 public class AuthorsFragment extends SherlockFragment {
+	// Sort type
+	private static final String SORT_BY_ARTIST_NAME = "artist/artist/";
+	private static final String SORT_BY_VIDEO_QUANTITY = "artist/cnt/";
 	
 	// Pager component
 	private static final int PAGE_SIZE = 20;
@@ -61,7 +64,12 @@ public class AuthorsFragment extends SherlockFragment {
 	}
 	
 	public AuthorsFragment() {
-		this.mUrl = "artist/cnt/";
+		// Default sort by name
+		this.mUrl = SORT_BY_ARTIST_NAME;
+	}
+	
+	public void changeSortType(String sort_type) {
+		this.mUrl = sort_type;
 	}
 	
 	@Override
@@ -137,6 +145,7 @@ public class AuthorsFragment extends SherlockFragment {
 		protected void onPostExecute(Void result) {
 			mAuthorAdapter.notifyDataSetChanged();
 			mPullAndLoadListViewAuthor.onRefreshComplete();
+			mPullAndLoadListViewAuthor.onRefresh();
 			super.onPostExecute(result);
 		}
 
@@ -230,7 +239,7 @@ public class AuthorsFragment extends SherlockFragment {
 						mArrayListAuthorItem.remove(mArrayListAuthorItem.size() - 1);
 					}
 				}				
-				mArrayListAuthorItem.addAll(arrPullToRefreshAuthorPage);
+				mArrayListAuthorItem.addAll(0, arrPullToRefreshAuthorPage);
 			}
 			// We need notify the adapter that the data have been changed
 			mAuthorAdapter.notifyDataSetChanged();
@@ -312,7 +321,7 @@ public class AuthorsFragment extends SherlockFragment {
 
 			Intent i = new Intent(getActivity(), PagerListVideoActivity.class);
 			i.putExtra("type", PagerListVideoActivity.TYPE_AUTHOR_VIDEOS);
-			i.putExtra("author_name", mArrayListAuthorItem.get(position).getName());
+			i.putExtra("author_name", mArrayListAuthorItem.get(position - 1).getName());
 			i.putExtra("isOnline", isOnline);
 			getActivity().startActivity(i);
 		}

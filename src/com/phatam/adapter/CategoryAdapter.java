@@ -26,28 +26,13 @@ public class CategoryAdapter extends ArrayAdapter<CategoryModel>{
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
-//		return super.getView(position, convertView, parent);
-//		Log.v("in get view of category", "asdasda");
 		View rowView=convertView;
 		if(rowView == null)
 		{
 			LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			rowView=inflater.inflate(R.layout.list_item_category, null);
 		}
-//		Log.v("in get view of category", "2");
-//		rowView.setOnClickListener(new View.OnClickListener() {
-//			
-//			public void onClick(View v) {
-//				// TODO Auto-generated method stub
-//				ViewHolder viewHold=(ViewHolder)v.getTag();
-//				Model_Category element = (Model_Category)viewHold.check.getTag();
-//				element.setSelected(!((Model_Category)viewHold.check.getTag()).getSelected());
-//				viewHold.check.setChecked(element.getSelected());
-//				
-////				Toast.makeText(context, "You choose:"+((Model)viewHold.check.getTag()).getName()+";isChecked:"+((Model)viewHold.check.getTag()).getSelected(), Toast.LENGTH_SHORT).show();
-//			}
-//		});
+		
 		TextView text = (TextView) rowView.findViewById(R.id.category_list_text);
         text.setText(list.get(position).getName());
 		return rowView;

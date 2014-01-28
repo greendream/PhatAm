@@ -15,16 +15,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.phatam.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.phatam.R;
+import com.phatam.entity.VideoInfo;
 import com.phatam.entity.VideoItem;
 
-public class ListVideoAdapter extends ArrayAdapter<VideoItem> {
+public class ListRelativeVideoAdapter extends ArrayAdapter<VideoItem> {
 
 	private final Activity mActivity;
 	private ArrayList<VideoItem> mListVideoModel;
@@ -38,7 +39,7 @@ public class ListVideoAdapter extends ArrayAdapter<VideoItem> {
 		public ImageView image;
 	}
 
-	public ListVideoAdapter(Activity activity, ArrayList<VideoItem> list_model) {
+	public ListRelativeVideoAdapter(Activity activity, ArrayList<VideoItem> list_model) {
 		// TODO Auto-generated constructor stub
 		super(activity, R.layout.list_item_video, list_model);
 		this.mActivity = activity;

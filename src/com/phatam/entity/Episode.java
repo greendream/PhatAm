@@ -5,11 +5,13 @@ public class Episode {
 	String episode;
 	String uniq_id;
 	String yt_id;
+	String yt_thumb;
 
-	public Episode(String uniq_id, int episode_id, String yt_id, String episode) {
+	public Episode(String uniq_id, int episode_id, String yt_id, String youtube_image, String episode) {
 		this.uniq_id = uniq_id;
 		this.episode_id = episode_id;
 		this.yt_id = yt_id;
+		this.yt_thumb = youtube_image;
 		this.episode = episode;
 	}
 
@@ -27,5 +29,9 @@ public class Episode {
 
 	public String getYoutubeId() {
 		return this.yt_id;
+	}
+	
+	public String getYoutubeThumb() {
+		return this.yt_thumb;
 	}
 }

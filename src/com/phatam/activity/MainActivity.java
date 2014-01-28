@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -42,8 +43,11 @@ public class MainActivity extends SherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.frame_content);
 
+		// Chage Actionbar background color
+		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
+		
 		LayoutInflater inflater = getLayoutInflater();
-		View menu_frame = inflater.inflate(R.layout.list_view_in_slidingmenu, null);
+		View menu_frame = inflater.inflate(R.layout.layout_sliding_menu, null);
 
 		// Setting Sliding menu behavior
 		mSlidingMenu = new SlidingMenu(this);
@@ -52,13 +56,13 @@ public class MainActivity extends SherlockFragmentActivity {
 		mSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
 		mSlidingMenu.setShadowDrawable(R.drawable.shadow);
 		mSlidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-		mSlidingMenu.setFadeDegree(0.25f);
+		mSlidingMenu.setFadeDegree(0.35f);
 		mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
 		mSlidingMenu.setMenu(menu_frame);
 
 		// Initial list view for menu_frame
 		TwoTextArrayAdapter adapter = new TwoTextArrayAdapter(this, getListMenuItem());
-		lvSlidingMenu = (ListView) menu_frame.findViewById(R.id.list_view_sliding_menu);
+		lvSlidingMenu = (ListView) menu_frame.findViewById(R.id.list_view_in_sliding_menu);
 		lvSlidingMenu.setAdapter(adapter);
 		lvSlidingMenu.setOnItemClickListener(onItemClick);
 		lvSlidingMenu.setDivider(null);

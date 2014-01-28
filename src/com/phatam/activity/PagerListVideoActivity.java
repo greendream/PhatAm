@@ -3,6 +3,7 @@ package com.phatam.activity;
 import java.util.ArrayList;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -41,10 +42,11 @@ public class PagerListVideoActivity extends SherlockFragmentActivity {
 	public ArrayList<VideoItem> list_model = new ArrayList<VideoItem>();
 	ListView mListView;
 	ListVideoAdapter mListVideoAdapter;
-
+	
 	String mType; // top,new,random video, category
 	int mCategoryOrder; // use when type is "category"
 	String mAuthorName; // use when type is artist
+	String mAuthorNameUrl; // use when type is artist
 	int mCurrentPage;
 
 	@Override
@@ -52,6 +54,9 @@ public class PagerListVideoActivity extends SherlockFragmentActivity {
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_viewpager_titlestrip);
 
+		// Chage Actionbar background color
+		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
+		
 		Intent intent = getIntent();
 		mType = intent.getStringExtra("type");
 		if (mType.equals(TYPE_CATEGORY_VIDEOS)) {
@@ -60,7 +65,7 @@ public class PagerListVideoActivity extends SherlockFragmentActivity {
 		
 		if (mType.equals(TYPE_AUTHOR_VIDEOS)) {
 			mAuthorName = intent.getStringExtra("author_name");
-			mAuthorName = mAuthorName.replace(" ", "%20");	
+			mAuthorNameUrl = mAuthorName.replace(" ", "%20");	
 		}
 		
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -97,7 +102,7 @@ public class PagerListVideoActivity extends SherlockFragmentActivity {
 			mViewPager.setCurrentItem(0, true);
 		}
 		if (mType.equals(TYPE_AUTHOR_VIDEOS)) {
-			getSupportActionBar().setTitle(R.string.new_videos);
+			getSupportActionBar().setTitle(mAuthorName);
 			mViewPager.setCurrentItem(1, true);
 		}
 		if (mType.equals(TYPE_NEW_VIDEOS)) {
@@ -124,7 +129,7 @@ public class PagerListVideoActivity extends SherlockFragmentActivity {
 		}
 		
 		if (mType.equals(TYPE_AUTHOR_VIDEOS)){
-			return mType + "/" + mAuthorName;
+			return mType + "/" + mAuthorNameUrl;
 		}
 		return this.mType;
 	}

@@ -86,9 +86,10 @@ public class RestClientAPI {
 						int site_views = line_object.getInt("site_views");
 						String mp3 = line_object.getString("audio");
 						String yt_id = line_object.getString("yt_id");
+						String category = line_object.getString("category");						 
 						VideoItem item = new VideoItem(uniq_id, artist,
 								video_title, description, yt_id, yt_thumb,
-								site_views);
+								site_views, category);
 						data.add(item);
 					}
 //					RestClientUsage.getVideoFullInfo(data.get(0));
@@ -103,7 +104,7 @@ public class RestClientAPI {
 	}
 
 	public static VideoItem getVideoRecommend(VideoItem video, final String type) {
-		final List<VideoInfo> related = new ArrayList<VideoInfo>();
+		final ArrayList<VideoItem> related = new ArrayList<VideoItem>();
 		String url = String.format("video/%s/%s", video.getUniqueId(), type);
 		RestClient.GET(url, null, new JsonHttpResponseHandler() {
 			@Override
@@ -126,9 +127,10 @@ public class RestClientAPI {
 						int site_views = line_object.getInt("site_views");
 						String mp3 = line_object.getString("audio");
 						String yt_id = line_object.getString("yt_id");
+						String category = line_object.getString("category");						 
 						VideoItem item = new VideoItem(uniq_id, artist,
 								video_title, description, yt_id, yt_thumb,
-								site_views);
+								site_views, category);
 						related.add(item);
 					}
 				} catch (JSONException e) {
@@ -147,9 +149,9 @@ public class RestClientAPI {
 	}
 
 	public static VideoItem getVideoFullInfo(VideoItem video) {
-		final List<Episode> episodes = new ArrayList<Episode>();
-		final List<VideoInfo> related = new ArrayList<VideoInfo>();
-		final List<Tag> tags = new ArrayList<Tag>();
+		final ArrayList<Episode> episodes = new ArrayList<Episode>();
+		final ArrayList<VideoItem> related = new ArrayList<VideoItem>();
+		final ArrayList<Tag> tags = new ArrayList<Tag>();
 		String url = "video/" + video.getUniqueId();
 		
 		// Run GET task to get full info of info
@@ -183,10 +185,10 @@ public class RestClientAPI {
 						JSONObject line_object = jArray.getJSONObject(i);
 						String uniq_id = line_object.getString("uniq_id");
 						String yt_id = line_object.getString("yt_id");
+						String yt_thumb = line_object.getString("yt_thumb");
 						String episode = line_object.getString("episode");
 						int episode_id = line_object.getInt("episode_id");
-						Episode item = new Episode(uniq_id, episode_id, yt_id,
-								episode);
+						Episode item = new Episode(uniq_id, episode_id, yt_id, yt_thumb, episode);
 						episodes.add(item);
 					}
 					// Get related
@@ -205,9 +207,10 @@ public class RestClientAPI {
 						int site_views = line_object.getInt("site_views");
 						String mp3 = line_object.getString("audio");
 						String yt_id = line_object.getString("yt_id");
+						String category = line_object.getString("category");						 
 						VideoItem item = new VideoItem(uniq_id, artist,
 								video_title, description, yt_id, yt_thumb,
-								site_views);
+								site_views, category);
 						related.add(item);
 					}
 				} catch (JSONException e) {
@@ -248,9 +251,10 @@ public class RestClientAPI {
 						int site_views = line_object.getInt("site_views");
 						String mp3 = line_object.getString("audio");
 						String yt_id = line_object.getString("yt_id");
+						String category = line_object.getString("category");						 
 						VideoItem item = new VideoItem(uniq_id, artist,
 								video_title, description, yt_id, yt_thumb,
-								site_views);
+								site_views, category);
 						data.add(item);
 					}
 				} catch (JSONException e) {

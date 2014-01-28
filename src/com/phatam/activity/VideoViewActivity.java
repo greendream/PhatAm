@@ -22,6 +22,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -90,6 +91,9 @@ public class VideoViewActivity extends SherlockFragmentActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_video_view);
+		
+		// Chage Actionbar background color
+		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
 
 		arrButton[0] = (Button) findViewById(R.id.videoview_btn_show_related_video);
 		arrButton[1] = (Button) findViewById(R.id.videoview_btn_show_same_author_video);
@@ -103,7 +107,7 @@ public class VideoViewActivity extends SherlockFragmentActivity {
 		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN)
 			arrButton[1].setBackgroundResource(R.drawable.red_gradient);
 		else
-			arrButton[1].setBackgroundResource(R.drawable.green_gradient);
+			arrButton[1].setBackgroundResource(R.drawable.splash_gradient);
 		
 		
 		Fragment fragment = new PullAndLoadmoreListVideoFragment(PagerListVideoActivity.TYPE_NEW_VIDEOS, PullAndLoadmoreListVideoFragment.ORDER_BY_RATING);
@@ -335,7 +339,7 @@ public class VideoViewActivity extends SherlockFragmentActivity {
 		// Set Icon
 				.setSmallIcon(R.drawable.cd_disk)
 				// Set Ticker Message
-				.setTicker(getString(R.string.hello))
+				.setTicker(getString(R.string.str_version))
 				// Dismiss Notification
 				.setAutoCancel(true)
 				// Set PendingIntent into Notification

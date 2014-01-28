@@ -1,5 +1,6 @@
 package com.phatam.activity;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings.PluginState;
@@ -20,6 +21,10 @@ public class VideoActivity extends SherlockActivity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.video_activity);
+		
+		// Chage Actionbar background color
+		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
+		
 		wv = (WebView)findViewById(R.id.webView); 
 		wv.getSettings().setPluginState(PluginState.ON);
 	    wv.getSettings().setJavaScriptEnabled(true);
