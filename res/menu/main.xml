@@ -4,8 +4,6 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:icon="@drawable/ic_menu_category"
         android:title="@string/action_settings"/>
-<!-- <item android:id="@+id/github" android:icon="@drawable/ic_action_github" android:showAsAction="always" android:title="@string/github_label" android:titleCondensed="@string/github" android:visible="true"></item>
- -->    
+
 </menu>

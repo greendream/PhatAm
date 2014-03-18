@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 
+ * Copyright (C) 2014  Le Ngoc Anh <greendream.ait@gmail.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * 
+ -->
 <resources>
 
     <string name="app_name">Phật âm</string>
     <string name="action_settings">Settings</string>
     <string name="search_title">Search</string>
-    <string name="search_hint">Từ khóa</string>
-    <string name="str_version">Phật âm version 0.2.1</string>
+    <string name="search_hint">Nhập từ khóa</string>
+    <string name="str_version">Phật âm version 0.2.6 Ngày 17/03/2014</string>
     <string name="github">GitHub</string>
     <string name="more">Thêm</string>
     <string name="github_label">SlidingMenu on GitHub</string>
     <string name="title_bar_slide">Phật âm</string>
-    <string name="category_title">Phật âm</string>
     
     <string name="related_videos">Video liên quan</string>
     <string name="same_author_videos">Video cùng Tác giả</string>
@@ -21,21 +37,27 @@
     <string name="type_video_title">Tiêu đề</string>
     <string name="full_video_title">Thông tin chi tiết</string>
     
-    <string name="category">Chuyên mục</string>
-    <string name="author">Tác giả</string>
-    <string name="top_videos">Video nổi Bật</string>
-    <string name="new_videos">Video mới</string>
-    <string name="random_videos">Video ngẫu nhiên</string>
-    <string name="contact">Liên hệ</string>
-
     <string-array name="list_category_array">
-        <item>@string/category</item>
-        <item>@string/author</item>
-        <item>@string/top_videos</item>
-        <item>@string/new_videos</item>
-        <item>@string/random_videos</item>
-        <item>@string/contact</item>
+        <item>@string/sliding_menu_lable_category</item>
+        <item>@string/sliding_menu_lable_artist</item>
+        <item>@string/sliding_menu_lable_top_videos</item>
+        <item>@string/sliding_menu_lable_new_videos</item>
+        <item>@string/sliding_menu_lable_random_videos</item>
+        <item>@string/sliding_menu_lable_contact</item>
     </string-array>
+    
+    <string name="sliding_menu_lable_home">Trang chủ</string>
+    <string name="sliding_menu_category_phatam">PHẬT ÂM</string>
+    <string name="sliding_menu_lable_category">Chuyên mục</string>
+    <string name="sliding_menu_lable_artist">Tác giả</string>
+    <string name="sliding_menu_lable_top_videos">Video nổi bật</string>
+    <string name="sliding_menu_lable_new_videos">Video mới</string>
+    <string name="sliding_menu_lable_random_videos">Video ngẫu nhiên</string>
+    <string name="sliding_menu_category_aplication">ỨNG DỤNG</string>
+    <string name="sliding_menu_lable_setting">Cài đặt</string>
+    <string name="sliding_menu_lable_introduce">Giới thiệu</string>
+    <string name="sliding_menu_lable_contact">Liên hệ</string>
+    <string name="sliding_menu_lable_shoutdown">Đóng ứng dụng</string>
     
     <string-array name="arr_cartegory_id">
         <item>1</item>
@@ -66,13 +88,6 @@
         <item>Phim hoạt hình</item>
     </string-array>
     
-    <string name="setting_title">Công cụ</string>
-
-    <string-array name="list_setting_array">
-        <item>Cài đặt</item>
-        <item>Đóng ứng dụng</item>
-    </string-array>
-    
     <string-array name="detail_category_array">
         <item>Kinh- Chú</item>
         <item>Pháp thoại</item>
@@ -90,9 +105,21 @@
     <string name="pull_to_refresh_pull_label">Kéo xuống để làm mới...</string>
     <string name="pull_to_refresh_release_label">Thả ra để làm mới...</string>
     <string name="pull_to_refresh_refreshing_label">Đang tải dữ liệu...</string>
-    <string name="pull_to_refresh_tap_label">Vui lòng đợi trong giây lát...</string>
+    <string name="pull_to_refresh_tap_label">Chạm để làm mới...</string>
     <string name="load_more_post">Tải thêm dữ liệu...</string>
     
     <string name="error_player">Lỗi khởi tạo trình phát Video (%1$s)</string>
+    
+    <string name="mMsgInit">Vui lòng đợi</string>
+    <string name="mMsgDetect">Vui lòng đợi</string>
+    <string name="mMsgPlaylist">Xác định video cuối trong Playlist</string>
+    <string name="mMsgToken"></string>
+    <string name="mMsgLowBand">Vui lòng đợi</string>
+    <string name="mMsgHiBand">Vui lòng đợi</string>
+    <string name="mMsgErrorTitle">Lỗi liên kết</string>
+    <string name="mMsgError">Lỗi xảy ra trong quá trình nhận video. Có thể do kết nối mạng của bạn.  Vui lòng thử lại sau.</string>
 
+    <string name="action_search">Tìm video</string>
+    <string name="action_favorite">Thêm vào ưa thích</string>
+    <string name="action_share">Chia sẻ</string>
 </resources>

@@ -30,12 +30,9 @@
 	</style>
 
     <style name="AnimationPopup">
-        <item name="@android:windowEnterAnimation">@anim/appear</item>
-        <item name="@android:windowExitAnimation">@anim/disappear</item>
+        <item name="@android:windowEnterAnimation">@animator/appear</item>
+        <item name="@android:windowExitAnimation">@animator/disappear</item>
     </style>
 
-    <!-- #FF01C2D4 -->
-    <!-- 4bc1d2 -->
-    <color name="blue">#4bc1d2</color>
-    <color name="blue_effect">#aa4bc1d2</color>
+    
 </resources>

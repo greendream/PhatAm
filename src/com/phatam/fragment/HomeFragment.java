@@ -1,6 +1,23 @@
-package com.phatam.fragment;
+/*
+ * Copyright (C) 2014  Le Ngoc Anh <greendream.ait@gmail.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * 
+ */
 
-import java.util.ArrayList;
+
+package com.phatam.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,30 +27,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.phatam.R;
-import com.phatam.activity.MainActivity;
-import com.phatam.activity.PagerListVideoActivity;
-import com.phatam.adapter.CategoryWithNumberAdapter;
-import com.phatam.adapter.ListVideoAdapter;
-import com.phatam.model.CategoryWithNumberModel;
-import com.phatam.model.VideoModel;
-import com.phatam.util.ListViewUtils;
+import com.phatam.activities.MainActivity;
+import com.phatam.adapters.ListVideoAdapter;
+import com.phatam.websevice.ApiUrl;
 
 public class HomeFragment extends SherlockFragment {
 	public static int NUM_PAGES = 3;
 	public static int VIDEO_PAGE = 1;
 
-	public ArrayList<CategoryWithNumberModel> mListCategoryWithNumberModel = new ArrayList<CategoryWithNumberModel>();
-	ListView mListViewCategory;
-	CategoryWithNumberAdapter mAdapterCategory;
 
-	public ArrayList<VideoModel> mArrListNewVideoModel = new ArrayList<VideoModel>();
 	ListView mListViewNewVideo;
 	ListVideoAdapter mListNewVideoAdapter;
 	Button mButtons[] = new Button[3];
@@ -44,30 +51,13 @@ public class HomeFragment extends SherlockFragment {
 
 	public void setMainActivity(MainActivity a) {
 		mMainActivity = a;
+		mMainActivity.getSupportActionBar().setTitle(R.string.app_name);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-
-		// Declare list view show info about how many category, author
-		String[] arrListCategory = getResources().getStringArray(R.array.list_category_array);
-		String number = "";
-		mListCategoryWithNumberModel.clear();
-		for (int i = 0; i < 2; i++) {
-			if (i == 0) number = "12";
-			if (i == 1) number = "100";
-			if (i > 1) number = "";
-			mListCategoryWithNumberModel.add(new CategoryWithNumberModel(arrListCategory[i], number));
-		}
-
-		mListViewCategory = (ListView) rootView.findViewById(R.id.home_fragment_list_description);
-		mAdapterCategory = new CategoryWithNumberAdapter(getSherlockActivity(), mListCategoryWithNumberModel);
-		mListViewCategory.setAdapter(mAdapterCategory);
-		ListViewUtils.getListViewSize(mListViewCategory);
-		mListViewCategory.setOnItemClickListener(onCategoryItemClick);
 
 		mButtons[0] = (Button) rootView.findViewById(R.id.home_fragment_btn_show_top_video);
 		mButtons[1] = (Button) rootView.findViewById(R.id.home_fragment_btn_show_new_video);
@@ -79,14 +69,14 @@ public class HomeFragment extends SherlockFragment {
 		}
 		
 		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN)
-			mButtons[1].setBackgroundResource(R.drawable.red_gradient);
+			mButtons[1].setBackgroundResource(R.drawable.blue_gradient);
 		else
-			mButtons[1].setBackgroundResource(R.drawable.red_gradient);
+			mButtons[1].setBackgroundResource(R.drawable.blue_gradient);
 
 		/**
 		 * Commit fragment into parent fragment
 		 */
-		PullAndLoadmoreListVideoFragment fragment = new PullAndLoadmoreListVideoFragment(PagerListVideoActivity.TYPE_NEW_VIDEOS, PullAndLoadmoreListVideoFragment.ORDER_BY_ADDED);
+		LoadmoreListVideoFragment fragment = new LoadmoreListVideoFragment().setUrl(ApiUrl.getNewVideoUrl(ApiUrl.ORDER_BY_UPLOAD_DATE, -1));
 		FragmentManager childmanager = getFragmentManager();
 		childmanager.beginTransaction().replace(R.id.home_fragment_fragment, fragment).commit();
 
@@ -94,56 +84,29 @@ public class HomeFragment extends SherlockFragment {
 
 	}
 
-	private OnItemClickListener onCategoryItemClick = new OnItemClickListener() {
-
-		@Override
-		public void onItemClick(AdapterView<?> arg0, View view, int pos,
-				long arg3) {
-			// TODO Auto-generated method stub
-			FragmentManager manger = getFragmentManager();
-			Fragment fragment = null;
-			String screenTitle = "";
-			switch (pos) {
-			case 0:
-				fragment = new CategoryFragment();
-				screenTitle = getString(R.string.category);
-				break;
-			case 1:
-				fragment = new AuthorsFragment();
-				screenTitle = getString(R.string.author);
-				break;			
-			}
-
-			manger.beginTransaction().replace(((ViewGroup) getView().getParent()).getId(), fragment).addToBackStack(null).commit();
-			mMainActivity.getSupportActionBar().setTitle(screenTitle);
-		}
-	};
-
 	// When click buttons to show type of video
 	private View.OnClickListener OnButtonClickListener = new View.OnClickListener() {
 
-		@SuppressWarnings("deprecation")
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
 			for (int i = 0; i < 3; i++)
 				mButtons[i].setBackgroundColor(getResources().getColor(
 						android.R.color.background_light));
 			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN)
-				v.setBackgroundResource(R.drawable.red_gradient);
+				v.setBackgroundResource(R.drawable.blue_gradient);
 			else
-				v.setBackgroundResource(R.drawable.red_gradient);
+				v.setBackgroundResource(R.drawable.blue_gradient);
 			VIDEO_PAGE = Integer.parseInt(v.getTag().toString());
 			Fragment fragment = null;
 			switch (VIDEO_PAGE) {
 			case 0:
-				fragment = new PullAndLoadmoreListVideoFragment(PagerListVideoActivity.TYPE_TOP_VIDEOS, PullAndLoadmoreListVideoFragment.ORDER_BY_RATING);
+				fragment = new LoadmoreListVideoFragment().setUrl(ApiUrl.getTopVideoUrl(ApiUrl.ORDER_BY_VIDEO_RATING, -1));
 				break;
 			case 1:
-				fragment = new PullAndLoadmoreListVideoFragment(PagerListVideoActivity.TYPE_NEW_VIDEOS, PullAndLoadmoreListVideoFragment.ORDER_BY_RATING);
+				fragment = new LoadmoreListVideoFragment().setUrl(ApiUrl.getNewVideoUrl(ApiUrl.ORDER_BY_UPLOAD_DATE, -1));
 				break;
 			case 2:
-				fragment = new PullAndLoadmoreListVideoFragment(PagerListVideoActivity.TYPE_RANDOM_VIDEOS, PullAndLoadmoreListVideoFragment.ORDER_BY_RATING);
+				fragment = new LoadmoreListVideoFragment().setUrl(ApiUrl.getRandomVideoUrl(ApiUrl.ORDER_BY_SITE_VIDEO_TITLE, -1));
 				break;
 			default:
 				break;

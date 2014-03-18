@@ -19,8 +19,6 @@ package com.phatam.util;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.os.Build;
 
 /**
  * Class containing some static utility methods.
