@@ -52,8 +52,8 @@ import com.phatam.activities.PagerListVideoActivity;
 import com.phatam.adapters.AuthorAdapter;
 import com.phatam.customviews.LoadMoreListView;
 import com.phatam.customviews.LoadMoreListView.OnLoadMoreListener;
-import com.phatam.interfaces.OnRefreshListData;
 import com.phatam.entities.ArtistItem;
+import com.phatam.interfaces.OnRefreshListData;
 import com.phatam.websevice.ApiUrl;
 
 

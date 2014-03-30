@@ -130,7 +130,7 @@ public class PhatAmPlayBackService extends Service {
 						PendingIntent.getActivity(getApplicationContext(), 0,
 								new Intent(getApplicationContext(),
 										FullVideoInfoActivity.class), 0))
-				.addAction(R.drawable.ic_media_play, "Stop",
+				.addAction(R.drawable.ic_play, "Stop",
 						makePendingIntent(BROADCAST_PLAYBACK_STOP))
 				.addAction(R.drawable.ic_media_pause, "Pause",
 						makePendingIntent(BROADCAST_PLAYBACK_PAUSE));

@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -50,11 +51,14 @@ import com.phatam.fragment.ContactFragment;
 import com.phatam.fragment.HomeFragment;
 import com.phatam.fragment.IntroduceFragment;
 import com.phatam.fragment.SettingFragment;
+import com.phatam.interfaces.OnConnectionStatusChangeListener;
 import com.phatam.interfaces.OnSlidingMenuItemClickedListener;
+import com.phatam.playback.PhatAmConnectionStatusReceiver;
+import com.phatam.util.ConnectionUtil;
 import com.phatam.websevice.ApiUrl;
 
 public class MainActivity extends SherlockFragmentActivity implements
-		OnQueryTextListener, OnItemClickListener {
+		OnQueryTextListener, OnItemClickListener, OnConnectionStatusChangeListener {
 
 	// Main menu on the left hand
 	SlidingMenu mLeftSlidingMenu;
@@ -72,8 +76,11 @@ public class MainActivity extends SherlockFragmentActivity implements
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		PhatAmConnectionStatusReceiver.addConnectionObserver(this);
 		super.onCreate(savedInstanceState);
 
+		GlobalData.context = getApplicationContext();
+		
 		/**
 		 * Initial image loader
 		 */
@@ -108,7 +115,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 
 		mLeftSlidingMenu = new SlidingMenu(this);
 		mLeftSlidingMenu.setMode(SlidingMenu.LEFT);
-		mLeftSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		mLeftSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 		mLeftSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
 		mLeftSlidingMenu.setShadowDrawable(R.drawable.shadow);
 		mLeftSlidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
@@ -124,8 +131,12 @@ public class MainActivity extends SherlockFragmentActivity implements
 		homeFragment.setMainActivity(this);
 		mFragmentManager.beginTransaction().replace(R.id.content_frame, homeFragment).commit();
 
+		onConnectionStatusChange();
+    	
 	}
 
+	
+	
 	public ArrayList<SlidingMenuListItem> createSlidingMenuListItems() {
 		mSlidingMenuListItems = new ArrayList<SlidingMenuListItem>();
 
@@ -387,6 +398,14 @@ public class MainActivity extends SherlockFragmentActivity implements
 	}
 
 	@Override
+	protected void onPostResume() {
+		// TODO Auto-generated method stub
+		super.onPostResume();
+	}
+
+
+
+	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
 		try {
@@ -477,5 +496,19 @@ public class MainActivity extends SherlockFragmentActivity implements
 		super.onStop();
 		// The rest of your onStop() code.
 		EasyTracker.getInstance(this).activityStop(this); // Add this method.
+	}
+
+
+	@Override
+	public void onConnectionStatusChange() {
+		// TODO Auto-generated method stub
+		if (ConnectionUtil.getConnectivityStatus(this) == ConnectionUtil.TYPE_NOT_CONNECTED) {
+			this.findViewById(R.id.layoutConnectionError).setVisibility(View.VISIBLE);
+			this.findViewById(R.id.layoutConnectionError).startAnimation(AnimationUtils.loadAnimation(this, R.animator.appear));
+		} else {
+			this.findViewById(R.id.layoutConnectionError).setVisibility(View.GONE);
+			this.findViewById(R.id.layoutConnectionError).startAnimation(AnimationUtils.loadAnimation(this, R.animator.disappear));
+		}
+		
 	}
 }

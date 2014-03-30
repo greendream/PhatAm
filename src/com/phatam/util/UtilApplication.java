@@ -19,13 +19,80 @@
 
 package com.phatam.util;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.json.JSONObject;
+
+import android.content.Context;
 import android.os.Build;
 
 public class UtilApplication {
 
+	/**
+	 * Save JSON to Internal memory
+	 * 
+	 * @param json
+	 * @param fileName
+	 * @param ctx
+	 */
+	public static void saveJsonToInternalMemory(String json, String fileName, Context ctx) {
+		try {
+			BufferedWriter bufferedWriter = new BufferedWriter(
+												new FileWriter(
+														new File(ctx.getFilesDir() + File.separator + fileName)
+												)
+											);
+			
+			bufferedWriter.write(json);
+			bufferedWriter.close();
+		} catch (Exception e) {
+			
+		}
+	}
+	
+	/**
+	 * Load JSON from Internal memory
+	 * 
+	 * @param fileName
+	 * @param ctx
+	 * @return
+	 */
+	public static JSONObject loadJsonFromInternalMemory(String fileName, Context ctx) {
+		JSONObject json = new JSONObject();
+		try {
+			BufferedReader bufferedReader = new BufferedReader(
+												new FileReader(
+														new File(ctx.getFilesDir() + File.separator + fileName)
+												)
+											);
+			
+			StringBuilder builder = new StringBuilder("");
+			String read = "";
+			while((read = bufferedReader.readLine()) != null){
+				builder.append(read);
+			}
+			bufferedReader.close();
+			
+			json = new JSONObject(builder.toString());
+		} catch (Exception e) {
+			
+		}
+		
+		return json;
+	}
+	
+	/**
+	 * Copy stream
+	 * 
+	 * @param iStream
+	 * @param oStream
+	 */
 	public static void CopyStream(InputStream iStream, OutputStream oStream) {
 
 		final int buffer_size = 1024;

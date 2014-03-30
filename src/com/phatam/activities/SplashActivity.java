@@ -17,7 +17,6 @@
  */
 package com.phatam.activities;
 
-import com.phatam.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +24,8 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
+import com.phatam.R;
 
 public class SplashActivity extends Activity implements AnimationListener {
 

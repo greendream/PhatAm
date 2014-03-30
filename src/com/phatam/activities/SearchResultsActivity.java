@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -38,9 +39,12 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.phatam.R;
 import com.phatam.adapters.SearchFragmentAdapter;
 import com.phatam.config.GlobalData;
+import com.phatam.interfaces.OnConnectionStatusChangeListener;
+import com.phatam.playback.PhatAmConnectionStatusReceiver;
+import com.phatam.util.ConnectionUtil;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
-public class SearchResultsActivity extends SherlockFragmentActivity  implements OnQueryTextListener, OnClickListener {
+public class SearchResultsActivity extends SherlockFragmentActivity  implements OnQueryTextListener, OnClickListener, OnConnectionStatusChangeListener {
  
 	public static final int PREFER_RESULT_VIDEO = 0;
 	public static final int PREFER_RESULT_ARTIST = 1;
@@ -56,6 +60,8 @@ public class SearchResultsActivity extends SherlockFragmentActivity  implements 
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	PhatAmConnectionStatusReceiver.addConnectionObserver(this);
+    	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
 
@@ -116,6 +122,9 @@ public class SearchResultsActivity extends SherlockFragmentActivity  implements 
         
         btnArtistResult = (Button) findViewById(R.id.btnArtistResult);
         btnArtistResult.setOnClickListener(this);
+        
+        onConnectionStatusChange();
+    	
     }
     
 
@@ -191,5 +200,19 @@ public class SearchResultsActivity extends SherlockFragmentActivity  implements 
 		super.onStop();
 		// The rest of your onStop() code.
 		EasyTracker.getInstance(this).activityStop(this); // Add this method.
+	}
+	
+
+	@Override
+	public void onConnectionStatusChange() {
+		// TODO Auto-generated method stub
+		if (ConnectionUtil.getConnectivityStatus(this) == ConnectionUtil.TYPE_NOT_CONNECTED) {
+			this.findViewById(R.id.layoutConnectionError).setVisibility(View.VISIBLE);
+			this.findViewById(R.id.layoutConnectionError).startAnimation(AnimationUtils.loadAnimation(this, R.animator.appear));
+		} else {
+			this.findViewById(R.id.layoutConnectionError).setVisibility(View.GONE);
+			this.findViewById(R.id.layoutConnectionError).startAnimation(AnimationUtils.loadAnimation(this, R.animator.disappear));
+		}
+		
 	}
 }

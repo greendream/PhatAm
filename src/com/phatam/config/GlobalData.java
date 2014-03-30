@@ -19,8 +19,11 @@
 
 package com.phatam.config;
 
+import android.content.Context;
+
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class GlobalData {
 	public static ImageLoader imageLoader;
+	public static Context context;
 }

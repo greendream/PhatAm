@@ -85,19 +85,5 @@ public class EpisodeListViewFragment extends SherlockFragment {
 	public void setOnVideoItemClicked(OnItemClickListener onItemClick) {
 		OnVideoListItemClick = onItemClick;
 	}
-	
-//	OnVideoListItemClick = new OnItemClickListener() {
-//
-//		@Override
-//		public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-//				long arg3) {
-//			selectedVideoItem = mArrayListVideoItem.get(position - 1);
-//
-//			Intent i = new Intent(getSherlockActivity(),
-//					FullVideoInfoActivity.class);
-//			i.putExtra("ShowFrom", "LoadmoreListVideoFragment");
-//			startActivity(i);
-//		}
-//	};
 
 }

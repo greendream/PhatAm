@@ -19,74 +19,128 @@
 
 package com.phatam.fragment;
 
-import java.util.ArrayList;
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.GridView;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.phatam.R;
-import com.phatam.adapters.CategoryGridViewAdapter;
+import com.phatam.activities.PagerListVideoActivity;
+import com.phatam.websevice.ApiUrl;
 
-public class CategoryFragment extends SherlockFragment {
+public class CategoryFragment extends SherlockFragment implements OnClickListener {
 
-	GridView mGridViewCategory;
-	ArrayList<Integer> mArrIconRes = new ArrayList<Integer>();
-	CategoryGridViewAdapter mCategoryGridViewAdapter;
-	int cellWidth;
-	int cellHeight;
-	int numColumns;
-
+	private ImageView ivCategory1;
+	private ImageView ivCategory2;
+	private ImageView ivCategory3;
+	private ImageView ivCategory4;
+	private ImageView ivCategory5;
+	private ImageView ivCategory6;
+	private ImageView ivCategory7;
+	private ImageView ivCategory8;
+	private ImageView ivCategory9;
+	private ImageView ivCategory10;
+	private ImageView ivCategory11;
+	private ImageView ivCategory12;
+	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		View rootView = inflater.inflate(R.layout.fragment_category, container,
-				false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.fragment_category, container, false);
+		
+		ivCategory1 = (ImageView) rootView.findViewById(R.id.ivCategory1);
+		ivCategory1.setOnClickListener(this);
 
-		int[] mArrIconRes = {
-				R.drawable.icon_category1,
-				R.drawable.icon_category2,
-				R.drawable.icon_category3,
-				R.drawable.icon_category4,
-				R.drawable.icon_category5,
-				R.drawable.icon_category6,
-				R.drawable.icon_category7,
-				R.drawable.icon_category8,
-				R.drawable.icon_category9,
-				R.drawable.icon_category10,
-				R.drawable.icon_category11,
-				R.drawable.icon_category12};
+		ivCategory2 = (ImageView) rootView.findViewById(R.id.ivCategory2);
+		ivCategory2.setOnClickListener(this);
+		
+		ivCategory3 = (ImageView) rootView.findViewById(R.id.ivCategory3);
+		ivCategory3.setOnClickListener(this);
 
-		computeCellSize();
-		mGridViewCategory = (GridView) rootView.findViewById(R.id.gridViewCategory);
-		mGridViewCategory.setNumColumns(numColumns);
-		mCategoryGridViewAdapter = new CategoryGridViewAdapter(getSherlockActivity(), mArrIconRes, cellWidth, cellHeight);
-		mGridViewCategory.setAdapter(mCategoryGridViewAdapter);
-
+		ivCategory4 = (ImageView) rootView.findViewById(R.id.ivCategory4);
+		ivCategory4.setOnClickListener(this);
+		
+		ivCategory5 = (ImageView) rootView.findViewById(R.id.ivCategory5);
+		ivCategory5.setOnClickListener(this);
+		
+		ivCategory6 = (ImageView) rootView.findViewById(R.id.ivCategory6);
+		ivCategory6.setOnClickListener(this);
+		
+		ivCategory7 = (ImageView) rootView.findViewById(R.id.ivCategory7);
+		ivCategory7.setOnClickListener(this);
+		
+		ivCategory8 = (ImageView) rootView.findViewById(R.id.ivCategory8);
+		ivCategory8.setOnClickListener(this);
+		
+		ivCategory9 = (ImageView) rootView.findViewById(R.id.ivCategory9);
+		ivCategory9.setOnClickListener(this);
+		
+		ivCategory10 = (ImageView) rootView.findViewById(R.id.ivCategory10);
+		ivCategory10.setOnClickListener(this);
+		
+		ivCategory11 = (ImageView) rootView.findViewById(R.id.ivCategory11);
+		ivCategory11.setOnClickListener(this);
+		
+		ivCategory12 = (ImageView) rootView.findViewById(R.id.ivCategory12);
+		ivCategory12.setOnClickListener(this);
+		
 		return rootView;
 	}
-	
-	void computeCellSize() {
-		// Fetch screen height and width, to use as our max size when loading
-		// images as this
-		// activity runs full screen
-		final DisplayMetrics displayMetrics = new DisplayMetrics();
-		(this.getActivity()).getWindowManager().getDefaultDisplay()
-				.getMetrics(displayMetrics);
-		final int h = displayMetrics.heightPixels;
-		final int w = displayMetrics.widthPixels;
-		int SCREEN_WIDTH = (w < h) ? w : h;
-		//int SCREEN_HEIGHT = (h < w) ? w : h;
+
+	@Override
+	public void onClick(View v) {
+		v.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.animator.button_press));
+		int pos = 0;
 		
-		cellWidth = (SCREEN_WIDTH - 40) / 3;
-		cellHeight = cellWidth * 470 / 400;
+		switch (v.getId()) {
+		case R.id.ivCategory1:
+			pos = 0;
+			break;
+		case R.id.ivCategory2:
+			pos = 1;
+			break;
+		case R.id.ivCategory3:
+			pos = 2;
+			break;
+		case R.id.ivCategory4:
+			pos = 3;
+			break;
+		case R.id.ivCategory5:
+			pos = 4;
+			break;
+		case R.id.ivCategory6:
+			pos = 5;
+			break;
+		case R.id.ivCategory7:
+			pos = 6;
+			break;
+		case R.id.ivCategory8:
+			pos = 7;
+			break;
+		case R.id.ivCategory9:
+			pos = 8;
+			break;
+		case R.id.ivCategory10:
+			pos = 9;
+			break;
+		case R.id.ivCategory11:
+			pos = 10;
+			break;
+		case R.id.ivCategory12:
+			pos = 11;
+			break;
+		}
 		
-		numColumns = SCREEN_WIDTH / cellWidth;
+		Intent i = new Intent(getActivity(), PagerListVideoActivity.class);
+		i.putExtra(PagerListVideoActivity.STR_URL, ApiUrl.getVideoInCategoryUrl(getActivity().getResources().getStringArray(R.array.arr_cartegory_id)[pos], "", 1));
+		i.putExtra(PagerListVideoActivity.STR_ACTION_BAR_TITLE, getActivity().getResources().getStringArray(R.array.arr_cartegory_name)[pos]);
+		i.putExtra(PagerListVideoActivity.STR_DEFAULT_PAGE_INDEX, 2);
+		
+		getActivity().startActivity(i);
 	}
 
 }

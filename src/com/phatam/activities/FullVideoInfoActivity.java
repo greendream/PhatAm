@@ -36,6 +36,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AnimationUtils;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -68,15 +69,18 @@ import com.phatam.entities.Episode;
 import com.phatam.entities.Tag;
 import com.phatam.entities.VideoItem;
 import com.phatam.fragment.EpisodeListViewFragment;
-import com.phatam.fragment.LoadmoreListVideoFragment;
 import com.phatam.fragment.RelativeVideoListViewFragment;
+import com.phatam.interfaces.OnConnectionStatusChangeListener;
+import com.phatam.playback.PhatAmConnectionStatusReceiver;
 import com.phatam.playback.PhatAmPlayBackService;
+import com.phatam.util.ConnectionUtil;
 import com.phatam.websevice.OnGetJsonListener;
 import com.phatam.websevice.ServiceGetVideoInfo;
 
 public class FullVideoInfoActivity extends SherlockFragmentActivity implements
-		OnClickListener, OnItemClickListener, OnToggleFullScreenControler, OnRetrieveVideoInfoListener, MediaPlayer.OnCompletionListener {
-
+		OnClickListener, OnItemClickListener, OnToggleFullScreenControler, OnRetrieveVideoInfoListener, MediaPlayer.OnCompletionListener, OnConnectionStatusChangeListener {
+	public static final String INFO_VIDEO_UNIQUE_ID = "unique_id";
+	
 	// Video Player
 	private OpenYouTubePlayerSupportFragment mVideoPlayerFragment;
 	private boolean mIsFullScreen;
@@ -110,6 +114,7 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		PhatAmConnectionStatusReceiver.addConnectionObserver(this);
 		
 		super.onCreate(savedInstanceState);
 		
@@ -140,10 +145,10 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 				new ColorDrawable(getResources().getColor(R.color.blue)));
 
 		// Get full video info
-		String ShowVideoFrom = getIntent().getExtras().getString("ShowFrom");
-		if ("LoadmoreListVideoFragment".equals(ShowVideoFrom)) {
-			mVideoItem = LoadmoreListVideoFragment.selectedVideoItem;
-		}
+		String strUniqueId = getIntent().getExtras().getString(INFO_VIDEO_UNIQUE_ID);
+		mVideoItem = new VideoItem();
+		mVideoItem.setUniqueId(strUniqueId);
+		
 		setContentView(R.layout.activity_full_video_info);
 		((LinearLayout) findViewById(R.id.layoutVideoInfo))
 				.setVisibility(View.GONE);
@@ -164,7 +169,9 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 		getVideoFullInfo();
 
 		doLayout();
-
+		
+		onConnectionStatusChange();
+    	
 	}
 
 	public void getVideoFullInfo() {
@@ -717,5 +724,18 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 		EasyTracker.getInstance(this).activityStop(this); // Add this method.
 	}
 
+
+	@Override
+	public void onConnectionStatusChange() {
+		// TODO Auto-generated method stub
+		if (ConnectionUtil.getConnectivityStatus(this) == ConnectionUtil.TYPE_NOT_CONNECTED) {
+			this.findViewById(R.id.layoutConnectionError).setVisibility(View.VISIBLE);
+			this.findViewById(R.id.layoutConnectionError).startAnimation(AnimationUtils.loadAnimation(this, R.animator.appear));
+		} else {
+			this.findViewById(R.id.layoutConnectionError).setVisibility(View.GONE);
+			this.findViewById(R.id.layoutConnectionError).startAnimation(AnimationUtils.loadAnimation(this, R.animator.disappear));
+		}
+		
+	}
 	
 }

@@ -36,10 +36,10 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.phatam.R;
 import com.phatam.entities.VideoItem;
 
@@ -71,7 +71,7 @@ public class ListRelativeVideoAdapter extends ArrayAdapter<VideoItem> {
 				.cacheInMemory(true)
 				.cacheOnDisc(true)
 				.considerExifParams(true)
-				.displayer(new RoundedBitmapDisplayer(10)).build();
+				.displayer(new RoundedBitmapDisplayer(5)).build();
 	}
 
 	@Override

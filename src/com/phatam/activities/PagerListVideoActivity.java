@@ -25,6 +25,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.animation.AnimationUtils;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -39,6 +41,9 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.phatam.R;
 import com.phatam.config.GlobalData;
 import com.phatam.fragment.LoadmoreListVideoFragment;
+import com.phatam.interfaces.OnConnectionStatusChangeListener;
+import com.phatam.playback.PhatAmConnectionStatusReceiver;
+import com.phatam.util.ConnectionUtil;
 import com.phatam.websevice.ApiUrl;
 import com.viewpagerindicator.PageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
@@ -50,7 +55,7 @@ import com.viewpagerindicator.TitlePageIndicator;
  * @author anhle
  *
  */
-public class PagerListVideoActivity extends SherlockFragmentActivity implements OnQueryTextListener {
+public class PagerListVideoActivity extends SherlockFragmentActivity implements OnQueryTextListener, OnConnectionStatusChangeListener {
 
 	private MenuItem mSearchMenuItem;
 
@@ -72,6 +77,8 @@ public class PagerListVideoActivity extends SherlockFragmentActivity implements 
 
 	@Override
 	protected void onCreate(Bundle arg0) {
+		PhatAmConnectionStatusReceiver.addConnectionObserver(this);
+		
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_video_view_pager);
 		
@@ -113,7 +120,9 @@ public class PagerListVideoActivity extends SherlockFragmentActivity implements 
 		
 		// Show back icon in the left of Home button
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+		
+		onConnectionStatusChange();
+    	
 	}
 
 	@Override
@@ -228,5 +237,19 @@ public class PagerListVideoActivity extends SherlockFragmentActivity implements 
 		super.onStop();
 		// The rest of your onStop() code.
 		EasyTracker.getInstance(this).activityStop(this); // Add this method.
+	}
+	
+
+	@Override
+	public void onConnectionStatusChange() {
+		// TODO Auto-generated method stub
+		if (ConnectionUtil.getConnectivityStatus(this) == ConnectionUtil.TYPE_NOT_CONNECTED) {
+			this.findViewById(R.id.layoutConnectionError).setVisibility(View.VISIBLE);
+			this.findViewById(R.id.layoutConnectionError).startAnimation(AnimationUtils.loadAnimation(this, R.animator.appear));
+		} else {
+			this.findViewById(R.id.layoutConnectionError).setVisibility(View.GONE);
+			this.findViewById(R.id.layoutConnectionError).startAnimation(AnimationUtils.loadAnimation(this, R.animator.disappear));
+		}
+		
 	}
 }

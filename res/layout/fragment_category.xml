@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
  * Copyright (C) 2014  Le Ngoc Anh <greendream.ait@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,16 +15,179 @@
  * limitations under the License.
  * 
  * 
- -->
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/gridViewCategory"
-    android:padding="8dp"
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center_horizontal"
-    android:numColumns="auto_fit"
-    android:verticalSpacing="8dp"
-    android:horizontalSpacing="8dp" >
+    android:layout_margin="2dp"
+    android:orientation="vertical" >
 
-</GridView>
+    <!-- Row 1 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <!-- Columns 1 -->
+
+        <ImageView
+            android:id="@+id/ivCategory1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_category1" />
+
+        <!-- Columns 2 -->
+
+        <ImageView
+            android:id="@+id/ivCategory2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_category2" />
+
+        <!-- Columns 3 -->
+
+        <ImageView
+            android:id="@+id/ivCategory3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_category3" />
+    </LinearLayout>
+
+    <!-- Row 2 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <!-- Columns 1 -->
+
+        <ImageView
+            android:id="@+id/ivCategory4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_category4" />
+
+        <!-- Columns 2 -->
+
+        <ImageView
+            android:id="@+id/ivCategory5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_category5" />
+
+        <!-- Columns 3 -->
+
+        <ImageView
+            android:id="@+id/ivCategory6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_category6" />
+    </LinearLayout>
+
+    <!-- Row 3 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <!-- Columns 1 -->
+
+        <ImageView
+            android:id="@+id/ivCategory7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_category7" />
+
+        <!-- Columns 2 -->
+
+        <ImageView
+            android:id="@+id/ivCategory8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_category8" />
+
+        <!-- Columns 3 -->
+
+        <ImageView
+            android:id="@+id/ivCategory9"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_category9" />
+    </LinearLayout>
+
+    <!-- Row 4 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <!-- Columns 1 -->
+
+        <ImageView
+            android:id="@+id/ivCategory10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_category10" />
+
+        <!-- Columns 2 -->
+
+        <ImageView
+            android:id="@+id/ivCategory11"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_category11" />
+
+        <!-- Columns 3 -->
+
+        <ImageView
+            android:id="@+id/ivCategory12"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_category12" />
+    </LinearLayout>
+
+</LinearLayout>

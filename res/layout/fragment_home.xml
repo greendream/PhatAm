@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
  * Copyright (C) 2014  Le Ngoc Anh <greendream.ait@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,77 +15,108 @@
  * limitations under the License.
  * 
  * 
- -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/home_fragment"
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:background="#e2e2e2" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <ListView
-            android:id="@+id/home_fragment_list_description"
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:divider="#e8e8e8"
-            android:paddingLeft="@dimen/list_padding"
-            android:paddingRight="@dimen/list_padding" />
-
-        <TextView
-            android:id="@+id/home_fragment_text_video"
+        <FrameLayout
+            android:id="@+id/banner_gallery_new_video"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:text="VIDEO"
-            android:textStyle="bold"
-            android:textAppearance="@android:style/TextAppearance.Medium" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/blue"
-            android:orientation="horizontal" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="3" >
-
-            <Button
-                android:id="@+id/home_fragment_btn_show_top_video"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:text="@string/sliding_menu_lable_top_videos"
-                android:textSize="17sp" />
-
-            <Button
-                android:id="@+id/home_fragment_btn_show_new_video"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:text="@string/sliding_menu_lable_new_videos"
-                android:textSize="17sp" />
-
-            <Button
-                android:id="@+id/home_fragment_btn_show_random_video"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:text="@string/sliding_menu_lable_random_videos"
-                android:textSize="17sp" />
-        </LinearLayout>
+            android:layout_marginBottom="10dp"
+            android:padding="@dimen/list_padding" />
 
         <FrameLayout
-            android:id="@+id/home_fragment_fragment"
+            android:id="@+id/layoutPhapThoai"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="@dimen/list_padding" />
+
+        <FrameLayout
+            android:id="@+id/layoutKinhChu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="@dimen/list_padding" />
+
+        <FrameLayout
+            android:id="@+id/layoutSachNoi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="@dimen/list_padding" />
+
+        <FrameLayout
+            android:id="@+id/layoutTanNhacPhatGiao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="@dimen/list_padding" />
+
+        <FrameLayout
+            android:id="@+id/layoutCoNhacPhatGiao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="@dimen/list_padding" />
+
+        <FrameLayout
+            android:id="@+id/layoutNhacThien"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="@dimen/list_padding" />
+
+        <FrameLayout
+            android:id="@+id/layoutPhimTruyen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="@dimen/list_padding" />
+
+        <FrameLayout
+            android:id="@+id/layoutPhimTaiLieu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="@dimen/list_padding" />
+
+        <FrameLayout
+            android:id="@+id/layoutPhatPhapNhiemMau"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="@dimen/list_padding" />
+
+        <FrameLayout
+            android:id="@+id/layoutAnhSangPhatPhap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="@dimen/list_padding" />
+
+        <FrameLayout
+            android:id="@+id/layoutMotNgayAnLac"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="@dimen/list_padding" />
+
+        <FrameLayout
+            android:id="@+id/layoutPhimHoatHinh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:padding="@dimen/list_padding" />
     </LinearLayout>
 
-</FrameLayout>
+</ScrollView>

@@ -42,9 +42,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.phatam.BuildConfig;
@@ -60,8 +60,6 @@ import com.phatam.websevice.ApiUrl;
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 @SuppressLint("ValidFragment")
 public class LoadmoreListVideoFragment extends SherlockFragment implements OnRefreshListData{
-	public static VideoItem selectedVideoItem;
-
 	// About load content
 	private static final int PAGE_SIZE = ApiUrl.VIDEO_PAGE_SIZE;
 	private int mEndPageIndex = 0;
@@ -279,10 +277,8 @@ public class LoadmoreListVideoFragment extends SherlockFragment implements OnRef
 
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-			selectedVideoItem = mArrayListVideoItems.get(position);
-
 			Intent i = new Intent(getSherlockActivity(), FullVideoInfoActivity.class);
-			i.putExtra("ShowFrom", "LoadmoreListVideoFragment");
+			i.putExtra(FullVideoInfoActivity.INFO_VIDEO_UNIQUE_ID, mArrayListVideoItems.get(position).getUniqueId());
 			startActivity(i);
 		}
 	};

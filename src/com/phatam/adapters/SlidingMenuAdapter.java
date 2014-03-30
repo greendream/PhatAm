@@ -20,7 +20,6 @@
 package com.phatam.adapters;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -91,7 +90,7 @@ public class SlidingMenuAdapter extends BaseAdapter {
 		
 		case SlidingMenuListItem.SCREEN_IN_CATEGORY:
 			
-			listItem = inflater.inflate(R.layout.sliding_menu_screen_in_category_item, parent, false);
+			listItem = inflater.inflate(R.layout.sliding_menu_screen_item, parent, false);
 			
 			ImageView ivIconLeft = (ImageView) listItem.findViewById(R.id.ivIconLeft);
 			ivIconLeft.setImageResource(mSlidingMenuListItems.get(position).getIconLeft());
