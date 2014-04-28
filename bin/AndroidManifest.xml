@@ -31,6 +31,7 @@
         android:normalScreens="true"
         android:smallScreens="true" />
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -76,7 +77,8 @@
         <!-- Show video list as Pager activity -->
         <activity
             android:name="com.phatam.activities.PagerListVideoActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" >
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"  >
         </activity>
 
         <!-- Show full info and Play that video activity -->

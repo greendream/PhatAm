@@ -36,7 +36,7 @@
         android:background="@drawable/bg_transparent_gradient_bottom_to_top" >
 
         <LinearLayout
-            android:id="@+id/layoutIndicator"
+            android:id="@+id/layoutVideoInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -57,7 +57,7 @@
                 android:shadowRadius="1"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#fff"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -71,7 +71,7 @@
                 android:shadowDy="1"
                 android:shadowRadius="1"
                 android:textColor="@color/blue"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <com.viewpagerindicator.CirclePageIndicator

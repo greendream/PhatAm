@@ -32,16 +32,11 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
 import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.phatam.R;
 import com.phatam.adapters.SearchFragmentAdapter;
-import com.phatam.config.GlobalData;
 import com.phatam.interfaces.OnConnectionStatusChangeListener;
 import com.phatam.playback.PhatAmConnectionStatusReceiver;
-import com.phatam.util.ConnectionUtil;
+import com.phatam.util.UtilConnection;
 import com.viewpagerindicator.UnderlinePageIndicator;
 
 public class SearchResultsActivity extends SherlockFragmentActivity  implements OnQueryTextListener, OnClickListener, OnConnectionStatusChangeListener {
@@ -65,21 +60,6 @@ public class SearchResultsActivity extends SherlockFragmentActivity  implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
 
-     // This configuration tuning is custom. You can tune every option, you
-      		// may tune some of them,
-      		// or you can create default configuration by
-      		// ImageLoaderConfiguration.createDefault(this);
-      		// method.
-      		ImageLoaderConfiguration config = new ImageLoaderConfiguration
-      				.Builder(this)
-      				.threadPriority(Thread.NORM_PRIORITY - 2)
-      				.denyCacheImageMultipleSizesInMemory()
-      				.discCacheFileNameGenerator(new Md5FileNameGenerator())
-      				.tasksProcessingOrder(QueueProcessingType.LIFO)
-      				.build();
-      		// Initialize ImageLoader with configuration.
-      		GlobalData.imageLoader = ImageLoader.getInstance();
-      		GlobalData.imageLoader.init(config);
       		
         Intent intent = getIntent();
         mKeyWord = intent.getStringExtra("KEY_WORD");
@@ -206,7 +186,7 @@ public class SearchResultsActivity extends SherlockFragmentActivity  implements 
 	@Override
 	public void onConnectionStatusChange() {
 		// TODO Auto-generated method stub
-		if (ConnectionUtil.getConnectivityStatus(this) == ConnectionUtil.TYPE_NOT_CONNECTED) {
+		if (UtilConnection.getConnectivityStatus(this) == UtilConnection.TYPE_NOT_CONNECTED) {
 			this.findViewById(R.id.layoutConnectionError).setVisibility(View.VISIBLE);
 			this.findViewById(R.id.layoutConnectionError).startAnimation(AnimationUtils.loadAnimation(this, R.animator.appear));
 		} else {

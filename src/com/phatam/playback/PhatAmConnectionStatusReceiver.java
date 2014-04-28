@@ -23,10 +23,8 @@ import java.util.Vector;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import com.phatam.interfaces.OnConnectionStatusChangeListener;
-import com.phatam.util.ConnectionUtil;
 
 public class PhatAmConnectionStatusReceiver extends BroadcastReceiver {
 	private static Vector<OnConnectionStatusChangeListener> connectionObservers = new Vector<OnConnectionStatusChangeListener>();

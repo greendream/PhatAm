@@ -24,23 +24,23 @@ public final class R {
 		public static final int ic_media_fullscreen_stretch = 0x7f02008d;
 		public static final int ic_media_pause = 0x7f02008e;
 		public static final int ic_media_play = 0x7f02008f;
-		public static final int icon = 0x7f02009f;
+		public static final int icon = 0x7f0200a2;
 	}
 	public static final class id {
-		public static final int btnFullScreenToggle = 0x7f0600ad;
-		public static final int ffwd = 0x7f0600a7;
-		public static final int layoutBottomController = 0x7f0600a9;
-		public static final int layoutControlerCenter = 0x7f0600a3;
-		public static final int mediacontroller_progress = 0x7f0600ab;
-		public static final int next = 0x7f0600a8;
-		public static final int pause = 0x7f0600a6;
-		public static final int prev = 0x7f0600a4;
-		public static final int rew = 0x7f0600a5;
-		public static final int time = 0x7f0600ac;
-		public static final int time_current = 0x7f0600aa;
+		public static final int btnFullScreenToggle = 0x7f0600a2;
+		public static final int ffwd = 0x7f06009c;
+		public static final int layoutBottomController = 0x7f06009e;
+		public static final int layoutControlerCenter = 0x7f060098;
+		public static final int mediacontroller_progress = 0x7f0600a0;
+		public static final int next = 0x7f06009d;
+		public static final int pause = 0x7f06009b;
+		public static final int prev = 0x7f060099;
+		public static final int rew = 0x7f06009a;
+		public static final int time = 0x7f0600a1;
+		public static final int time_current = 0x7f06009f;
 	}
 	public static final class layout {
-		public static final int media_controller = 0x7f03002c;
+		public static final int media_controller = 0x7f03002d;
 	}
 	public static final class string {
 		public static final int VideoView_error_button = 0x7f0b001d;

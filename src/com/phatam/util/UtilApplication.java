@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import org.json.JSONObject;
@@ -85,6 +86,34 @@ public class UtilApplication {
 		}
 		
 		return json;
+	}
+	
+	/**
+	 * Load String from asset file
+	 * @param fileName
+	 * @param ctx
+	 * @return
+	 */
+	public static String loadStringFromAssetFile(String fileName, Context ctx) {
+		String content = "";
+		try {
+			BufferedReader bufferedReader = new BufferedReader(
+												new InputStreamReader(ctx.getAssets().open(fileName))
+											);
+			
+			StringBuilder builder = new StringBuilder("");
+			String read = "";
+			while((read = bufferedReader.readLine()) != null){
+				builder.append(read);
+			}
+			bufferedReader.close();
+			
+			content = builder.toString();
+		} catch (Exception e) {
+			
+		}
+		
+		return content;
 	}
 	
 	/**

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
  * Copyright (C) 2014  Le Ngoc Anh <greendream.ait@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,10 +15,11 @@
  * limitations under the License.
  * 
  * 
- -->
+-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:background="#e2e2e2" >
 
     <com.phatam.customviews.LoadMoreListView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -26,12 +27,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="4dp"
-        android:background="#e2e2e2"
         android:clipToPadding="false"
         android:divider="@null"
-        android:dividerHeight="4dp"
+        android:dividerHeight="2dp"
         android:fadingEdge="none"
-        android:padding="8dp"
         android:scrollbarStyle="outsideOverlay" />
 
     <TextView
@@ -46,7 +45,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/blue"
         android:visibility="gone" />
-    
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"

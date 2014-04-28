@@ -24,25 +24,27 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.phatam.R;
-import com.phatam.entities.SlidingMenuListItem;
+import com.phatam.model.MSlidingMenuListItem;
 
 public class SlidingMenuAdapter extends BaseAdapter {
 
 	private Context mContext;
-	private ArrayList<SlidingMenuListItem> mSlidingMenuListItems;
+	private ArrayList<MSlidingMenuListItem> mSlidingMenuListItems;
 
 	/**
 	 * Constructor
 	 * 
 	 * @param c
 	 */
-	public SlidingMenuAdapter(Context c, ArrayList<SlidingMenuListItem> navigationDrawerListItems) {
+	public SlidingMenuAdapter(Context c, ArrayList<MSlidingMenuListItem> navigationDrawerListItems) {
 		mContext = c;
 		mSlidingMenuListItems = navigationDrawerListItems;
 	}
@@ -72,23 +74,42 @@ public class SlidingMenuAdapter extends BaseAdapter {
 		View listItem = null;
 		
 		switch (mSlidingMenuListItems.get(position).getType()) {
-		case SlidingMenuListItem.HOME_ITEM:
+		case MSlidingMenuListItem.ITEM_TYPE_TOP_MENU_GROUP:
 			
 			listItem = inflater.inflate(R.layout.sliding_menu_home_item, parent, false);
 			
-			ImageView ivIconHome = (ImageView) listItem.findViewById(R.id.ivIconHome);
-			ivIconHome.setImageResource(mSlidingMenuListItems.get(position).getIconLeft());
+			ImageButton ibHome = (ImageButton) listItem.findViewById(R.id.ibHome);
+			ibHome.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					mSlidingMenuListItems.get(0).getActionHome().doAction();
+				}
+			});
 			
-			TextView tvHomeText = (TextView) listItem.findViewById(R.id.tvHomeText);
-			tvHomeText.setText(mSlidingMenuListItems.get(position).getText());
+			ImageButton ibFavorite = (ImageButton) listItem.findViewById(R.id.ibFavorite);
+			ibFavorite.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					mSlidingMenuListItems.get(0).getActionFavorite().doAction();
+				}
+			});
 
-			TextView tvHomeParam = (TextView) listItem.findViewById(R.id.tvHomeParam);
-			tvHomeParam.setText(mSlidingMenuListItems.get(position).getCounter());
-			
+			ImageButton ibHistory = (ImageButton) listItem.findViewById(R.id.ibHistory);
+			ibHistory.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					mSlidingMenuListItems.get(0).getActionHistory().doAction();
+				}
+			});
+
+			listItem.setOnClickListener(null);
 			break;
 
 		
-		case SlidingMenuListItem.SCREEN_IN_CATEGORY:
+		case MSlidingMenuListItem.ITEM_TYPE_SCREEN_IN_CATEGORY:
 			
 			listItem = inflater.inflate(R.layout.sliding_menu_screen_item, parent, false);
 			
@@ -104,7 +125,7 @@ public class SlidingMenuAdapter extends BaseAdapter {
 			break;
 			
 			
-		case SlidingMenuListItem.CATEGORY_NAME:
+		case MSlidingMenuListItem.ITEM_TYPE_CATEGORY_NAME:
 			
 			listItem = inflater.inflate(R.layout.sliding_menu_category_name_item, parent, false);
 			listItem.setOnClickListener(null);

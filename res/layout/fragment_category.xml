@@ -33,35 +33,36 @@
         <!-- Columns 1 -->
 
         <ImageView
-            android:id="@+id/ivCategory1"
+            android:id="@+id/ivCategory9"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="2dp"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@drawable/icon_category1" />
+            android:src="@drawable/icon_category9" />
 
         <!-- Columns 2 -->
 
         <ImageView
-            android:id="@+id/ivCategory2"
+            android:id="@+id/ivCategory8"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="2dp"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@drawable/icon_category2" />
+            android:src="@drawable/icon_category8" />
 
         <!-- Columns 3 -->
 
         <ImageView
-            android:id="@+id/ivCategory3"
+            android:id="@+id/ivCategory10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="2dp"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@drawable/icon_category3" />
+            android:src="@drawable/icon_category10" />
+
     </LinearLayout>
 
     <!-- Row 2 -->
@@ -117,35 +118,36 @@
         <!-- Columns 1 -->
 
         <ImageView
-            android:id="@+id/ivCategory7"
+            android:id="@+id/ivCategory2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="2dp"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@drawable/icon_category7" />
+            android:src="@drawable/icon_category2" />
+
+        <ImageView
+            android:id="@+id/ivCategory12"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_category12" />
+
+        <ImageView
+            android:id="@+id/ivCategory3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_category3" />
 
         <!-- Columns 2 -->
 
-        <ImageView
-            android:id="@+id/ivCategory8"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="2dp"
-            android:layout_weight="1"
-            android:scaleType="fitXY"
-            android:src="@drawable/icon_category8" />
-
         <!-- Columns 3 -->
 
-        <ImageView
-            android:id="@+id/ivCategory9"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="2dp"
-            android:layout_weight="1"
-            android:scaleType="fitXY"
-            android:src="@drawable/icon_category9" />
     </LinearLayout>
 
     <!-- Row 4 -->
@@ -158,16 +160,25 @@
 
         <!-- Columns 1 -->
 
+        <!-- Columns 2 -->
+
         <ImageView
-            android:id="@+id/ivCategory10"
+            android:id="@+id/ivCategory1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="2dp"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@drawable/icon_category10" />
+            android:src="@drawable/icon_category1" />
 
-        <!-- Columns 2 -->
+        <ImageView
+            android:id="@+id/ivCategory7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_category7" />
 
         <ImageView
             android:id="@+id/ivCategory11"
@@ -179,15 +190,6 @@
             android:src="@drawable/icon_category11" />
 
         <!-- Columns 3 -->
-
-        <ImageView
-            android:id="@+id/ivCategory12"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="2dp"
-            android:layout_weight="1"
-            android:scaleType="fitXY"
-            android:src="@drawable/icon_category12" />
     </LinearLayout>
 
 </LinearLayout>

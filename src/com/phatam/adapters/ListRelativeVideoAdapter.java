@@ -41,12 +41,12 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.phatam.R;
-import com.phatam.entities.VideoItem;
+import com.phatam.model.MVideoItem;
 
-public class ListRelativeVideoAdapter extends ArrayAdapter<VideoItem> {
+public class ListRelativeVideoAdapter extends ArrayAdapter<MVideoItem> {
 
 	private final Activity mActivity;
-	private ArrayList<VideoItem> mListVideoModel;
+	private ArrayList<MVideoItem> mListVideoModel;
 	DisplayImageOptions options;
 	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
@@ -59,7 +59,7 @@ public class ListRelativeVideoAdapter extends ArrayAdapter<VideoItem> {
 		public ImageView image;
 	}
 
-	public ListRelativeVideoAdapter(Activity activity, ArrayList<VideoItem> list_model) {
+	public ListRelativeVideoAdapter(Activity activity, ArrayList<MVideoItem> list_model) {
 		// TODO Auto-generated constructor stub
 		super(activity, R.layout.list_item_video, list_model);
 		this.mActivity = activity;
@@ -96,7 +96,7 @@ public class ListRelativeVideoAdapter extends ArrayAdapter<VideoItem> {
 
 		viewHolder = (ViewHolder) rowView.getTag();
 		viewHolder.name.setText(mListVideoModel.get(position).getVideoTitle());
-		viewHolder.author.setText("Tác giả: " + mListVideoModel.get(position).getVideoArtist());
+		viewHolder.author.setText("Tác giả: " + mListVideoModel.get(position).getArtistName());
 		viewHolder.viewCount.setText(mListVideoModel.get(position).getYoutubeView() + " lượt xem");
 		imageLoader.displayImage(mListVideoModel.get(position).getYoutubeThumb(),
 				viewHolder.image, options, animateFirstListener);

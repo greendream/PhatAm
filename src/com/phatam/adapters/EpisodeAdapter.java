@@ -40,20 +40,21 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.phatam.R;
-import com.phatam.entities.Episode;
-import com.phatam.entities.VideoItem;
+import com.phatam.model.MEpisode;
+import com.phatam.model.MVideoItem;
 
-public class EpisodeAdapter extends ArrayAdapter<Episode> {
+public class EpisodeAdapter extends ArrayAdapter<MEpisode> {
 
 	private final Activity mActivity;
-	private VideoItem mVideoItem;
-	private ArrayList<Episode> mEpisodeData;
-	DisplayImageOptions options;
-	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
-	protected ImageLoader imageLoader = ImageLoader.getInstance();
+	private MVideoItem mVideoItem;
+	private ArrayList<MEpisode> mEpisodeData;
 	private int mEndIndex = -1;
 	
-	public EpisodeAdapter(Activity activity, VideoItem videoItem) {
+	private DisplayImageOptions options;
+	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
+	private ImageLoader imageLoader = ImageLoader.getInstance();
+	
+	public EpisodeAdapter(Activity activity, MVideoItem videoItem) {
 		// TODO Auto-generated constructor stub
 		super(activity, R.layout.list_item_episode, videoItem.getEpisodes());
 		mVideoItem = videoItem;
@@ -79,7 +80,7 @@ public class EpisodeAdapter extends ArrayAdapter<Episode> {
 		}
 			
 		((TextView) rowView.findViewById(R.id.episode_index)).setText("Phần " + mEpisodeData.get(position).getEpisodeId());
-		((TextView) rowView.findViewById(R.id.video_list_astist)).setText("Tác giả: " + mVideoItem.getVideoArtist());
+		((TextView) rowView.findViewById(R.id.video_list_astist)).setText("Tác giả: " + mVideoItem.getArtistName());
 		imageLoader.displayImage(mEpisodeData.get(position).getYoutubeThumb(),
 				((ImageView) rowView.findViewById(R.id.video_list_image)), options, animateFirstListener);
 		

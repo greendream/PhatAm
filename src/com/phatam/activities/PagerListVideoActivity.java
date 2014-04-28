@@ -34,16 +34,11 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.SearchView;
 import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.phatam.R;
-import com.phatam.config.GlobalData;
-import com.phatam.fragment.LoadmoreListVideoFragment;
+import com.phatam.fragment.FLoadmoreListVideo;
 import com.phatam.interfaces.OnConnectionStatusChangeListener;
 import com.phatam.playback.PhatAmConnectionStatusReceiver;
-import com.phatam.util.ConnectionUtil;
+import com.phatam.util.UtilConnection;
 import com.phatam.websevice.ApiUrl;
 import com.viewpagerindicator.PageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
@@ -63,8 +58,8 @@ public class PagerListVideoActivity extends SherlockFragmentActivity implements 
 	public static final String STR_ACTION_BAR_TITLE = "ACTION_BAR_TITLE";
 	public static final String STR_DEFAULT_PAGE_INDEX = "DEFAULT_PAGE_INDEX";
 	
-	private static String[] PAGE_TITLES = {"Lượt xem", "Đánh giá", "Ngày đăng", "Tiêu đề"};
-	private static String[] ORDER_BY_TYPES= {ApiUrl.ORDER_BY_SITE_VIEW, ApiUrl.ORDER_BY_VIDEO_RATING, ApiUrl.ORDER_BY_UPLOAD_DATE, ApiUrl.ORDER_BY_SITE_VIDEO_TITLE};
+	private static String[] PAGE_TITLES = {"Ngày đăng", "Lượt xem", "Đánh giá", "Tiêu đề"};
+	private static String[] ORDER_BY_TYPES = {ApiUrl.ORDER_BY_UPLOAD_DATE, ApiUrl.ORDER_BY_SITE_VIEW, ApiUrl.ORDER_BY_VIDEO_RATING, ApiUrl.ORDER_BY_VIDEO_TITLE};
 	
 	private ViewPager mPager;
 	private ListVideoFragmentPagerAdapter adapter;
@@ -81,22 +76,6 @@ public class PagerListVideoActivity extends SherlockFragmentActivity implements 
 		
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_video_view_pager);
-		
-		// This configuration tuning is custom. You can tune every option, you
-		 		// may tune some of them,
-		 		// or you can create default configuration by
-		 		// ImageLoaderConfiguration.createDefault(this);
-		 		// method.
-		 		ImageLoaderConfiguration config = new ImageLoaderConfiguration
-		 				.Builder(this)
-		 				.threadPriority(Thread.NORM_PRIORITY - 2)
-		 				.denyCacheImageMultipleSizesInMemory()
-		 				.discCacheFileNameGenerator(new Md5FileNameGenerator())
-		 				.tasksProcessingOrder(QueueProcessingType.LIFO)
-		 				.build();
-		 		// Initialize ImageLoader with configuration.
-		 		GlobalData.imageLoader = ImageLoader.getInstance();
-		 		GlobalData.imageLoader.init(config);
 		
 		// Extract intent info
 		Intent i = getIntent();
@@ -161,11 +140,11 @@ public class PagerListVideoActivity extends SherlockFragmentActivity implements 
 			if (getString(R.string.sliding_menu_lable_top_videos).equals(mActionBarTitle) ||
 				getString(R.string.sliding_menu_lable_new_videos).equals(mActionBarTitle) ||
 				getString(R.string.sliding_menu_lable_random_videos).equals(mActionBarTitle)) {
-				return (new LoadmoreListVideoFragment().setUrl(mUrl));	
+				return (new FLoadmoreListVideo().setUrl(mUrl));	
 			}
 			/**********************************************************/
 			
-            return (new LoadmoreListVideoFragment().setUrl(mUrl + ORDER_BY_TYPES[position] + "/"));
+            return (new FLoadmoreListVideo().setUrl(mUrl + ORDER_BY_TYPES[position] + "/"));
 		}
 
 		@Override
@@ -243,7 +222,7 @@ public class PagerListVideoActivity extends SherlockFragmentActivity implements 
 	@Override
 	public void onConnectionStatusChange() {
 		// TODO Auto-generated method stub
-		if (ConnectionUtil.getConnectivityStatus(this) == ConnectionUtil.TYPE_NOT_CONNECTED) {
+		if (UtilConnection.getConnectivityStatus(this) == UtilConnection.TYPE_NOT_CONNECTED) {
 			this.findViewById(R.id.layoutConnectionError).setVisibility(View.VISIBLE);
 			this.findViewById(R.id.layoutConnectionError).startAnimation(AnimationUtils.loadAnimation(this, R.animator.appear));
 		} else {

@@ -22,7 +22,7 @@
     android:background="#e2e2e2" >
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
@@ -30,93 +30,75 @@
             android:id="@+id/banner_gallery_new_video"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:padding="@dimen/list_padding" />
 
-        <FrameLayout
-            android:id="@+id/layoutPhapThoai"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="@dimen/list_padding" />
+        <TextView
+            android:id="@+id/horizontalThickSpliter"
+            android:layout_width="fill_parent"
+            android:layout_height="5dp"
+            android:background="@color/blue" />
 
-        <FrameLayout
-            android:id="@+id/layoutKinhChu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="@dimen/list_padding" />
+        <!-- Preview video view -->
 
-        <FrameLayout
-            android:id="@+id/layoutSachNoi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="@dimen/list_padding" />
-
-        <FrameLayout
-            android:id="@+id/layoutTanNhacPhatGiao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="@dimen/list_padding" />
-
-        <FrameLayout
-            android:id="@+id/layoutCoNhacPhatGiao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="@dimen/list_padding" />
-
-        <FrameLayout
-            android:id="@+id/layoutNhacThien"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="@dimen/list_padding" />
-
-        <FrameLayout
-            android:id="@+id/layoutPhimTruyen"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="@dimen/list_padding" />
-
-        <FrameLayout
-            android:id="@+id/layoutPhimTaiLieu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="@dimen/list_padding" />
-
-        <FrameLayout
-            android:id="@+id/layoutPhatPhapNhiemMau"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="@dimen/list_padding" />
-
-        <FrameLayout
-            android:id="@+id/layoutAnhSangPhatPhap"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="@dimen/list_padding" />
-
-        <FrameLayout
-            android:id="@+id/layoutMotNgayAnLac"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="@dimen/list_padding" />
-
-        <FrameLayout
-            android:id="@+id/layoutPhimHoatHinh"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="10dp"
-            android:padding="@dimen/list_padding" />
+        <com.phatam.customviews.ViewSixVideosCategoryPreview
+            android:id="@+id/pvPhapThoai"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+        
+        <com.phatam.customviews.ViewFourVideosCategoryPreview
+            android:id="@+id/pvKinhChu"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+        
+        <com.phatam.customviews.ViewFourVideosCategoryPreview
+            android:id="@+id/pvSachNoi"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+        
+        <com.phatam.customviews.ViewFourVideosCategoryPreview
+            android:id="@+id/pvTanNhacPhatGiao"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+        
+        <com.phatam.customviews.ViewFourVideosCategoryPreview
+            android:id="@+id/pvCoNhacPhatGiao"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+        
+        <com.phatam.customviews.ViewFourVideosCategoryPreview
+            android:id="@+id/pvNhacThien"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+        
+        <com.phatam.customviews.ViewFourVideosCategoryPreview
+            android:id="@+id/pvPhimTruyen"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+        
+        <com.phatam.customviews.ViewFourVideosCategoryPreview
+            android:id="@+id/pvPhimTaiLieu"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+        
+        <com.phatam.customviews.ViewFourVideosCategoryPreview
+            android:id="@+id/pvPhatPhapNhiemMau"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+        
+        <com.phatam.customviews.ViewFourVideosCategoryPreview
+            android:id="@+id/pvAnhSangPhatPhap"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+        
+        <com.phatam.customviews.ViewFourVideosCategoryPreview
+            android:id="@+id/pvMotNgayAnLac"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+        
+        <com.phatam.customviews.ViewFourVideosCategoryPreview
+            android:id="@+id/pvPhimHoatHinh"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </ScrollView>

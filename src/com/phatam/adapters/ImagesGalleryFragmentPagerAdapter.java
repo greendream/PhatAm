@@ -26,7 +26,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.phatam.fragment.ImageInGalleryFragment;
+import com.phatam.fragment.FImageInGallery;
 
 public class ImagesGalleryFragmentPagerAdapter extends FragmentPagerAdapter {
 
@@ -46,7 +46,7 @@ public class ImagesGalleryFragmentPagerAdapter extends FragmentPagerAdapter {
     
     @Override
     public Fragment getItem(int position) {
-        return (new ImageInGalleryFragment()).setImageUrl(mImageUrls.get(position));
+        return (new FImageInGallery()).setImageUrl(mImageUrls.get(position));
     }
 
     @Override

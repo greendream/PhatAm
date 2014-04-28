@@ -18,13 +18,17 @@
 package com.phatam.activities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
@@ -36,8 +40,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.AnimationUtils;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -65,15 +69,16 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.phatam.BuildConfig;
 import com.phatam.R;
 import com.phatam.config.GlobalData;
-import com.phatam.entities.Episode;
-import com.phatam.entities.Tag;
-import com.phatam.entities.VideoItem;
-import com.phatam.fragment.EpisodeListViewFragment;
-import com.phatam.fragment.RelativeVideoListViewFragment;
+import com.phatam.fragment.FEpisodeListView;
+import com.phatam.fragment.FRelativeVideoListView;
 import com.phatam.interfaces.OnConnectionStatusChangeListener;
+import com.phatam.model.MEpisode;
+import com.phatam.model.MTag;
+import com.phatam.model.MVideoItem;
+import com.phatam.model.MVideoSavedItem;
 import com.phatam.playback.PhatAmConnectionStatusReceiver;
 import com.phatam.playback.PhatAmPlayBackService;
-import com.phatam.util.ConnectionUtil;
+import com.phatam.util.UtilConnection;
 import com.phatam.websevice.OnGetJsonListener;
 import com.phatam.websevice.ServiceGetVideoInfo;
 
@@ -104,7 +109,7 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 	ArrayAdapter<String> mEpisodeAdapter;
 	ArrayList<String> mListEpisodeData = new ArrayList<String>();
 
-	VideoItem mVideoItem;
+	MVideoItem mVideoItem;
 
 	Button btnVideoInfoTab;
 
@@ -119,20 +124,21 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 		super.onCreate(savedInstanceState);
 		
 		// This configuration tuning is custom. You can tune every option, you
-		 		// may tune some of them,
-		 		// or you can create default configuration by
-		 		// ImageLoaderConfiguration.createDefault(this);
-		 		// method.
-		 		ImageLoaderConfiguration config = new ImageLoaderConfiguration
-		 				.Builder(this)
-		 				.threadPriority(Thread.NORM_PRIORITY - 2)
-		 				.denyCacheImageMultipleSizesInMemory()
-		 				.discCacheFileNameGenerator(new Md5FileNameGenerator())
-		 				.tasksProcessingOrder(QueueProcessingType.LIFO)
-		 				.build();
-		 		// Initialize ImageLoader with configuration.
-		 		GlobalData.imageLoader = ImageLoader.getInstance();
-		 		GlobalData.imageLoader.init(config);
+		// may tune some of them,
+ 		// or you can create default configuration by
+ 		// ImageLoaderConfiguration.createDefault(this);
+ 		// method.
+ 		ImageLoaderConfiguration config = new ImageLoaderConfiguration
+ 				.Builder(this)
+ 				.threadPriority(Thread.NORM_PRIORITY - 2)
+ 				.denyCacheImageMultipleSizesInMemory()
+ 				.discCacheFileNameGenerator(new Md5FileNameGenerator())
+ 				.tasksProcessingOrder(QueueProcessingType.LIFO)
+ 				.build();
+ 		// Initialize ImageLoader with configuration.
+ 		GlobalData.imageLoader = ImageLoader.getInstance();
+ 		GlobalData.imageLoader.init(config);
+ 		
 		
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 			mIsFullScreen = false;
@@ -146,7 +152,7 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 
 		// Get full video info
 		String strUniqueId = getIntent().getExtras().getString(INFO_VIDEO_UNIQUE_ID);
-		mVideoItem = new VideoItem();
+		mVideoItem = new MVideoItem();
 		mVideoItem.setUniqueId(strUniqueId);
 		
 		setContentView(R.layout.activity_full_video_info);
@@ -177,9 +183,9 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 	public void getVideoFullInfo() {
 		((ProgressBar) findViewById(R.id.progressBar)).setVisibility(View.VISIBLE);
 		
-		final ArrayList<Episode> episodes = new ArrayList<Episode>();
-		final ArrayList<VideoItem> relatedVideos = new ArrayList<VideoItem>();
-		final ArrayList<Tag> tags = new ArrayList<Tag>();
+		final ArrayList<MEpisode> episodes = new ArrayList<MEpisode>();
+		final ArrayList<MVideoItem> relatedVideos = new ArrayList<MVideoItem>();
+		final ArrayList<MTag> tags = new ArrayList<MTag>();
 
 		ServiceGetVideoInfo serviceGetVideoInfo = new ServiceGetVideoInfo();
 		serviceGetVideoInfo.addOnGetJsonListener(new OnGetJsonListener() {
@@ -209,7 +215,7 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 						String yt_thumb = line_object.getString("yt_thumb");
 						String episode = line_object.getString("episode");
 						int episode_id = line_object.getInt("episode_id");
-						Episode item = new Episode(uniq_id, episode_id, yt_id,
+						MEpisode item = new MEpisode(uniq_id, episode_id, yt_id,
 								yt_thumb, episode);
 						episodes.add(item);
 					}
@@ -222,18 +228,14 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 						JSONObject line_object = jArray.getJSONObject(i);
 						String uniq_id = line_object.getString("uniq_id");
 						String artist = line_object.getString("artist");
-						String video_title = line_object
-								.getString("video_title");
-						String description = line_object
-								.getString("description");
-						String yt_thumb = line_object.getString("yt_thumb");
+						String video_title = line_object.getString("video_title");
+						String description = line_object.getString("description");
 						int site_views = line_object.getInt("site_views");
 						//String mp3 = line_object.getString("audio");
 						String yt_id = line_object.getString("yt_id");
+						String yt_thumb = "http://img.youtube.com/vi/" + yt_id + "/mqdefault.jpg";
 						String category = line_object.getString("category");
-						VideoItem item = new VideoItem(uniq_id, artist,
-								video_title, description, yt_id, yt_thumb,
-								site_views, category);
+						MVideoItem item = new MVideoItem(uniq_id, artist, video_title, description, yt_id, yt_thumb, site_views, category);
 						relatedVideos.add(item);
 					}
 
@@ -244,10 +246,12 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 						JSONObject line_object = jArray.getJSONObject(i);
 						String tag = line_object.getString("tag");
 						String safe_tag = line_object.getString("safe_tag");
-						Tag item = new Tag(tag, safe_tag);
+						MTag item = new MTag(tag, safe_tag);
 						tags.add(item);
 					}
-				
+
+					String share_link = jsonServerResponse.getString("share_link");
+					
 					// Get video detail info
 					JSONObject line_object = jsonServerResponse.getJSONObject("info");
 					Log.v("INFO : object received", "" + line_object.toString());
@@ -255,12 +259,12 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 					String artist = line_object.getString("artist");
 					String video_title = line_object.getString("video_title");
 					String description = line_object.getString("description");
-					String yt_thumb = line_object.getString("yt_thumb");
 					int site_views = line_object.getInt("site_views");
 					String yt_id = line_object.getString("yt_id");
+					String yt_thumb = "http://img.youtube.com/vi/" + yt_id + "/mqdefault.jpg";
 					String category = line_object.getString("category");
-					mVideoItem = new VideoItem(uniq_id, artist, video_title,
-							description, yt_id, yt_thumb, site_views, category);
+					mVideoItem = new MVideoItem(uniq_id, artist, video_title, description, yt_id, yt_thumb, site_views, category);
+					mVideoItem.setShare_link(share_link);
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -269,9 +273,15 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 				mVideoItem.setEpisode(episodes);
 				mVideoItem.setRelated(relatedVideos);
 				mVideoItem.setTag(tags);
+				
 
 				((ProgressBar) findViewById(R.id.progressBar)).setVisibility(View.GONE);
-				fillDataToComponent();
+				
+				try {
+					fillDataToComponent();
+				} catch (Exception e) {
+					
+				}
 			}
 		});
 		
@@ -279,25 +289,20 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 
 	}
 
-	private void fillDataToComponent() {
+	private void fillDataToComponent() throws Exception {
 
 		// Fill data about video info to UI
 		btnVideoInfoTab = (Button) findViewById(R.id.btnVideoInfoTab);
-		btnVideoInfoTab.setOnClickListener(this);
-
 		btnEpisodeTab = (Button) findViewById(R.id.btnEpisodeTab);
-		btnEpisodeTab.setOnClickListener(this);
-
 		btnRelativeVideoTab = (Button) findViewById(R.id.btnRelativeVideoTab);
-		btnRelativeVideoTab.setOnClickListener(this);
-
+		
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setTitle(mVideoItem.getVideoTitle());
-		getSupportActionBar().setSubtitle(mVideoItem.getVideoArtist());
+		getSupportActionBar().setSubtitle(mVideoItem.getArtistName());
 
 		// Fill data to Video-info Tab
 		((TextView) findViewById(R.id.tvVideoTitle)).setText(": " + mVideoItem.getVideoTitle());
-		((TextView) findViewById(R.id.tvVideoArtist)).setText(": " + mVideoItem.getVideoArtist());
+		((TextView) findViewById(R.id.tvVideoArtist)).setText(": " + mVideoItem.getArtistName());
 		
 		if (mVideoItem.getEpisodes().size() > 0) {
 			((TextView) findViewById(R.id.tvEpisode)).setText(": " + mVideoItem.getEpisodeId() + "/" + (mVideoItem.getEpisodes().size() + 1));
@@ -318,17 +323,13 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 
 		// Fill data to Episode Video Tab
 		mVideoItem.sortEpisodeIncByEpisodeId();
-		EpisodeListViewFragment fragmentEpisodeVideo = new EpisodeListViewFragment(
-				mVideoItem);
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.flEpisode, fragmentEpisodeVideo).commit();
+		FEpisodeListView fragmentEpisodeVideo = new FEpisodeListView(mVideoItem);
+		getSupportFragmentManager().beginTransaction().replace(R.id.flEpisode, fragmentEpisodeVideo).commit();
 		fragmentEpisodeVideo.setOnVideoItemClicked(this);
 
 		// Fill data to Relative Video Tab
-		RelativeVideoListViewFragment fragmentRelativeVideo = new RelativeVideoListViewFragment(
-				mVideoItem);
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.flRelativeVideo, fragmentRelativeVideo).commit();
+		FRelativeVideoListView fragmentRelativeVideo = new FRelativeVideoListView(mVideoItem);
+		getSupportFragmentManager().beginTransaction().replace(R.id.flRelativeVideo, fragmentRelativeVideo).commit();
 		fragmentRelativeVideo.setOnVideoItemClicked(this);
 
 		// Prepare for video player
@@ -350,6 +351,11 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 		if (PhatAmPlayBackService.getMediaPlayer() != null) {
 			mVideoPlayerFragment.setMediaPlayer(PhatAmPlayBackService.getMediaPlayer());
 		}
+		
+		// Set click event for tab button
+		btnVideoInfoTab.setOnClickListener(this);
+		btnEpisodeTab.setOnClickListener(this);
+		btnRelativeVideoTab.setOnClickListener(this);
 	}
 
 	/**
@@ -486,7 +492,7 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 	}
 
 	private void playEpisode(int pos) {
-		Episode episode = mVideoItem.getEpisodes().get(pos);
+		MEpisode episode = mVideoItem.getEpisodes().get(pos);
 		
 		// Copy info of video playing
 		String yt_id = mVideoItem.getYoutubeId();
@@ -522,7 +528,7 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 		
 		// Fill data to Episode Video Tab
 		mVideoItem.sortEpisodeIncByEpisodeId();
-		EpisodeListViewFragment fragmentEpisodeVideo = new EpisodeListViewFragment(mVideoItem);
+		FEpisodeListView fragmentEpisodeVideo = new FEpisodeListView(mVideoItem);
 		getSupportFragmentManager().beginTransaction().replace(R.id.flEpisode, fragmentEpisodeVideo).commit();
 		fragmentEpisodeVideo.setOnVideoItemClicked(this);
 		
@@ -590,10 +596,29 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 
 		@Override
 		public boolean onMenuItemClick(MenuItem item) {
-			// TODO Share handle
-			Toast.makeText(FullVideoInfoActivity.this,
-					"Chia sẻ video qua Facebook ^_^", Toast.LENGTH_SHORT)
-					.show();
+			try {
+				// prepare share content;
+				String strShareContent = mVideoItem.getShare_link();
+
+				Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+				shareIntent.setType("text/plain");
+				shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, strShareContent);
+				PackageManager pm = getApplicationContext().getPackageManager();
+				List<ResolveInfo> activityList = pm.queryIntentActivities(shareIntent, 0);
+				for (final ResolveInfo app : activityList) {
+					if ((app.activityInfo.name).contains("facebook")) {
+						final ActivityInfo activity = app.activityInfo;
+						final ComponentName name = new ComponentName(activity.applicationInfo.packageName, activity.name);
+						shareIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+						shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+						shareIntent.setComponent(name);
+						getApplicationContext().startActivity(shareIntent);
+						break;
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return false;
 		}
 	};
@@ -602,9 +627,14 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 
 		@Override
 		public boolean onMenuItemClick(MenuItem item) {
-			// TODO Add video to favorite handle
-			Toast.makeText(FullVideoInfoActivity.this,
-					"Thêm video vô yêu thích ^_^", Toast.LENGTH_SHORT).show();
+			
+			if (mVideoItem.getVideoTitle() != "" && mVideoItem.getArtistName() != null && mVideoItem.getYoutubeThumb() != null) {
+				MVideoSavedItem saveVideoItem = new MVideoSavedItem(mVideoItem.getUniqueId(), mVideoItem.getVideoTitle(), mVideoItem.getArtistName(), mVideoItem.getYoutubeThumb(), mVideoItem.getYoutubeView() + "", mVideoItem.getVideoLength() + "", 0);
+				GlobalData.addVideoToFavorite(saveVideoItem, FullVideoInfoActivity.this);
+				Log.i("ADD VIDEO", "Favorite: " + GlobalData.arrFavoriteVideos.size());
+				
+				Toast.makeText(FullVideoInfoActivity.this, "Đã thêm video vô danh sách yêu thích!", Toast.LENGTH_SHORT).show();
+			}
 			return false;
 		}
 	};
@@ -692,7 +722,7 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 		// Service Initial
 		final Intent serviceIntent = new Intent(getApplicationContext(), PhatAmPlayBackService.class);
 		serviceIntent.putExtra(PhatAmPlayBackService.EXTRA_VIDEO_TITLE, mVideoItem.getVideoTitle());
-		serviceIntent.putExtra(PhatAmPlayBackService.EXTRA_VIDEO_ARTIST, mVideoItem.getVideoArtist());
+		serviceIntent.putExtra(PhatAmPlayBackService.EXTRA_VIDEO_ARTIST, mVideoItem.getArtistName());
 		startService(serviceIntent);
 		
 	}
@@ -705,8 +735,7 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 			if (mVideoItem.getEpisodes().size() > 0 && isEndOfEplisode == false) {				
 				playNextEpisode();						
 			}
-		}
-		
+		}		
 	}
 
 
@@ -720,6 +749,18 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 	@Override
 	public void onStop() {
 		super.onStop();
+		
+
+		// Test
+		MVideoSavedItem saveVideoItem = new MVideoSavedItem(mVideoItem.getUniqueId(), mVideoItem.getVideoTitle(), mVideoItem.getArtistName(), mVideoItem.getYoutubeThumb(), mVideoItem.getYoutubeView() + "", mVideoItem.getVideoLength() + "", 0);
+		GlobalData.addVideoToHistory(saveVideoItem, this);
+		Log.i("ADD VIDEO", "History: " + GlobalData.arrHistoryVideos.size());
+		
+		
+		if (PhatAmPlayBackService.instance != null) {
+			PhatAmPlayBackService.instance.onDestroy();			
+		}
+		
 		// The rest of your onStop() code.
 		EasyTracker.getInstance(this).activityStop(this); // Add this method.
 	}
@@ -728,7 +769,7 @@ public class FullVideoInfoActivity extends SherlockFragmentActivity implements
 	@Override
 	public void onConnectionStatusChange() {
 		// TODO Auto-generated method stub
-		if (ConnectionUtil.getConnectivityStatus(this) == ConnectionUtil.TYPE_NOT_CONNECTED) {
+		if (UtilConnection.getConnectivityStatus(this) == UtilConnection.TYPE_NOT_CONNECTED) {
 			this.findViewById(R.id.layoutConnectionError).setVisibility(View.VISIBLE);
 			this.findViewById(R.id.layoutConnectionError).startAnimation(AnimationUtils.loadAnimation(this, R.animator.appear));
 		} else {

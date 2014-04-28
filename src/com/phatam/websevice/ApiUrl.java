@@ -25,7 +25,7 @@ public class ApiUrl {
 	
 	public static final String ORDER_BY_SITE_VIEW 		 	= "site_views";	// sort by the number of Video view.
 	public static final String ORDER_BY_UPLOAD_DATE		 	= "added";		// sort by upload Date.
-	public static final String ORDER_BY_SITE_VIDEO_TITLE 	= "title";		// sort by the Video title.
+	public static final String ORDER_BY_VIDEO_TITLE 		= "video_title";		// sort by the Video title.
 	public static final String ORDER_BY_VIDEO_RATING 	 	= "rating";		// sort by the Rating.
 	public static final String ORDER_BY_ARTIST_VIDEO_COUNT	= "cnt";		// sort by Video name.
 	public static final String ORDER_BY_ARTIST_NAME 	 	= "artist";		// sort by the artist name.
@@ -124,14 +124,13 @@ public class ApiUrl {
 	 *  
 	 * @return Destination API URL
 	 */
-	public static final String getTopVideoUrl(String ORDER_BY, int OFFSET) {
+	public static final String getTopVideoUrl(int OFFSET) {
 		
 		if (OFFSET < 0) {			
-//			return SERVER_URL + "topvideos/" + ORDER_BY + "/";
+			return SERVER_URL + "videos/" + ORDER_BY_SITE_VIEW + "/";
 		}
 		
-//		return SERVER_URL + "topvideos/" + ORDER_BY + "/" + OFFSET;
-		return "http://phatam.com/rest/public/index.php/topvideos/";
+		return SERVER_URL + "videos/" + ORDER_BY_SITE_VIEW + "/" + OFFSET;
 	}
 	
 	/**
@@ -141,14 +140,12 @@ public class ApiUrl {
 	 *  
 	 * @return Destination API URL
 	 */
-	public static final String getNewVideoUrl(String ORDER_BY, int OFFSET) {
+	public static final String getNewVideosUrl(int OFFSET) {
 		if (OFFSET < 0) {
-//			return SERVER_URL + "latestvideos/" + ORDER_BY + "/";
+			return SERVER_URL + "videos/" + ORDER_BY_UPLOAD_DATE + "/";
 		}
 		
-//		return SERVER_URL + "latestvideos/" + ORDER_BY + "/" + OFFSET;
-
-		return "http://phatam.com/rest/public/index.php/latestvideos/";
+		return SERVER_URL + "videos/" + ORDER_BY_UPLOAD_DATE + "/" + OFFSET;
 	}
 	
 	/**
@@ -158,13 +155,8 @@ public class ApiUrl {
 	 *  
 	 * @return Destination API URL
 	 */
-	public static final String getRandomVideoUrl(String ORDER_BY, int OFFSET) {
-		if (OFFSET < 0) {
-//			return SERVER_URL + "randomvideos/" + ORDER_BY + "/";
-		}
-		
-//		return SERVER_URL + "randomvideos/" + ORDER_BY + "/" + OFFSET;
-		return "http://phatam.com/rest/public/index.php/randomvideos";
+	public static final String getRandomVideoUrl() {
+		return SERVER_URL + "randomvideos";
 	}
 	
 	/**

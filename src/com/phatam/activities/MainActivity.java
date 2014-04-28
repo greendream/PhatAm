@@ -19,6 +19,9 @@ package com.phatam.activities;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -37,25 +40,26 @@ import com.actionbarsherlock.widget.SearchView;
 import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.phatam.R;
 import com.phatam.adapters.SlidingMenuAdapter;
 import com.phatam.config.GlobalData;
-import com.phatam.entities.SlidingMenuListItem;
-import com.phatam.fragment.ArtistFragment;
-import com.phatam.fragment.CategoryFragment;
-import com.phatam.fragment.ContactFragment;
-import com.phatam.fragment.HomeFragment;
-import com.phatam.fragment.IntroduceFragment;
-import com.phatam.fragment.SettingFragment;
+import com.phatam.fragment.FArtist;
+import com.phatam.fragment.FCategory;
+import com.phatam.fragment.FDonate;
+import com.phatam.fragment.FFavoriteVideosListView;
+import com.phatam.fragment.FHistoryVideosListView;
+import com.phatam.fragment.FHome;
+import com.phatam.fragment.FIntroduce;
+import com.phatam.fragment.FLoadmoreListVideo;
+import com.phatam.fragment.FSetting;
 import com.phatam.interfaces.OnConnectionStatusChangeListener;
 import com.phatam.interfaces.OnSlidingMenuItemClickedListener;
+import com.phatam.model.MSlidingMenuListItem;
 import com.phatam.playback.PhatAmConnectionStatusReceiver;
-import com.phatam.util.ConnectionUtil;
+import com.phatam.util.UtilConnection;
 import com.phatam.websevice.ApiUrl;
+import com.phatam.websevice.OnGetJsonListener;
+import com.phatam.websevice.ServiceGetRandomVideo;
 
 public class MainActivity extends SherlockFragmentActivity implements
 		OnQueryTextListener, OnItemClickListener, OnConnectionStatusChangeListener {
@@ -63,15 +67,15 @@ public class MainActivity extends SherlockFragmentActivity implements
 	// Main menu on the left hand
 	SlidingMenu mLeftSlidingMenu;
 	ListView mListViewInLeftSlidingMenu;
-	ArrayList<SlidingMenuListItem> mSlidingMenuListItems;
+	ArrayList<MSlidingMenuListItem> mSlidingMenuListItems;
 	SlidingMenuAdapter mSlidingMenuAdapter;
 
 	// Favorite on the right hand
-	// SlidingMenu mFavoriteVideo;
+	SlidingMenu mFavoriteVideo;
 
 	FragmentManager mFragmentManager;
-	ArtistFragment mAuthorsFragment;
-	CategoryFragment mCategoryFragment;
+	FArtist mAuthorsFragment;
+	FCategory mCategoryFragment;
 	MenuItem mSearchMenuItem;
 
 	@Override
@@ -80,18 +84,6 @@ public class MainActivity extends SherlockFragmentActivity implements
 		super.onCreate(savedInstanceState);
 
 		GlobalData.context = getApplicationContext();
-		
-		/**
-		 * Initial image loader
-		 */
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-				this).threadPriority(Thread.NORM_PRIORITY - 2)
-				.denyCacheImageMultipleSizesInMemory()
-				.discCacheFileNameGenerator(new Md5FileNameGenerator())
-				.tasksProcessingOrder(QueueProcessingType.LIFO).build();
-		// Initialize ImageLoader with configuration.
-		GlobalData.imageLoader = ImageLoader.getInstance();
-		GlobalData.imageLoader.init(config);
 
 		/**
 		 * Initial the activity
@@ -125,10 +117,12 @@ public class MainActivity extends SherlockFragmentActivity implements
 
 		/**
 		 * Show the home fragment for start-up
+		 *
 		 */
-		mFragmentManager = getSupportFragmentManager();
-		HomeFragment homeFragment = new HomeFragment();
+		
+		FHome homeFragment = new FHome();
 		homeFragment.setMainActivity(this);
+		mFragmentManager = getSupportFragmentManager();
 		mFragmentManager.beginTransaction().replace(R.id.content_frame, homeFragment).commit();
 
 		onConnectionStatusChange();
@@ -137,21 +131,20 @@ public class MainActivity extends SherlockFragmentActivity implements
 
 	
 	
-	public ArrayList<SlidingMenuListItem> createSlidingMenuListItems() {
-		mSlidingMenuListItems = new ArrayList<SlidingMenuListItem>();
+	public ArrayList<MSlidingMenuListItem> createSlidingMenuListItems() {
+		mSlidingMenuListItems = new ArrayList<MSlidingMenuListItem>();
 
-		// Create & Add Items "Trang chủ"
-		mSlidingMenuListItems.add(new SlidingMenuListItem(
-				SlidingMenuListItem.HOME_ITEM,
-				R.drawable.ic_menu_home,
-				this.getString(R.string.sliding_menu_lable_home),
-				"",
+		// Create & Add Items "Top menu group"
+		mSlidingMenuListItems.add(new MSlidingMenuListItem(
+				MSlidingMenuListItem.ITEM_TYPE_TOP_MENU_GROUP,
 				new OnSlidingMenuItemClickedListener() {
+					// Action for Home button
+					
 					@Override
 					public void doAction() {
 						// Create a new fragment and specify the planet to show
 						// based on position
-						HomeFragment fragment = new HomeFragment();
+						FHome fragment = new FHome();
 						
 						// Insert the fragment by replacing any existing
 						// fragment
@@ -163,12 +156,52 @@ public class MainActivity extends SherlockFragmentActivity implements
 						// close the sliding menu
 						mLeftSlidingMenu.toggle();
 					}
+				},
+				new OnSlidingMenuItemClickedListener() {
+					// Action for Favorite button
+					
+					@Override
+					public void doAction() {
+						// Create a new fragment and specify the planet to show
+						// based on position
+						FFavoriteVideosListView fragment = new FFavoriteVideosListView();
+						
+						// Insert the fragment by replacing any existing
+						// fragment
+						mFragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
+		
+						// Rename the action bar
+						getSupportActionBar().setTitle(R.string.str_favorite);
+						
+						// close the sliding menu
+						mLeftSlidingMenu.toggle();
+					}
+				},
+				new OnSlidingMenuItemClickedListener() {
+					// Action for History button
+					
+					@Override
+					public void doAction() {
+						// Create a new fragment and specify the planet to show
+						// based on position
+						FHistoryVideosListView fragment = new FHistoryVideosListView();
+						
+						// Insert the fragment by replacing any existing
+						// fragment
+						mFragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
+		
+						// Rename the action bar
+						getSupportActionBar().setTitle(R.string.str_history);
+						
+						// close the sliding menu
+						mLeftSlidingMenu.toggle();
+					}
 				})
 		);
 
 		// Create & Add Items CATEGORY "PHẬT ÂM"
-		mSlidingMenuListItems.add(new SlidingMenuListItem(
-				SlidingMenuListItem.CATEGORY_NAME,
+		mSlidingMenuListItems.add(new MSlidingMenuListItem(
+				MSlidingMenuListItem.ITEM_TYPE_CATEGORY_NAME,
 				0,
 				this.getString(R.string.sliding_menu_category_phatam),
 				"",
@@ -176,8 +209,8 @@ public class MainActivity extends SherlockFragmentActivity implements
 		);
 		
 		// Create & Add Items "Chuyên mục"
-		mSlidingMenuListItems.add(new SlidingMenuListItem(
-				SlidingMenuListItem.SCREEN_IN_CATEGORY,
+		mSlidingMenuListItems.add(new MSlidingMenuListItem(
+				MSlidingMenuListItem.ITEM_TYPE_SCREEN_IN_CATEGORY,
 				R.drawable.ic_menu_category,
 				this.getString(R.string.sliding_menu_lable_category),
 				"",
@@ -186,7 +219,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 					public void doAction() {
 						// Create a new fragment and specify the planet to show
 						// based on position
-						CategoryFragment fragment = new CategoryFragment();
+						FCategory fragment = new FCategory();
 						
 						// Insert the fragment by replacing any existing
 						// fragment
@@ -202,8 +235,8 @@ public class MainActivity extends SherlockFragmentActivity implements
 		);
 
 		// Create & Add Items "Tác giả"
-		mSlidingMenuListItems.add(new SlidingMenuListItem(
-				SlidingMenuListItem.SCREEN_IN_CATEGORY,
+		mSlidingMenuListItems.add(new MSlidingMenuListItem(
+				MSlidingMenuListItem.ITEM_TYPE_SCREEN_IN_CATEGORY,
 				R.drawable.ic_menu_artist,
 				this.getString(R.string.sliding_menu_lable_artist),
 				"",
@@ -212,7 +245,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 					public void doAction() {
 						// Create a new fragment and specify the planet to show
 						// based on position
-						ArtistFragment fragment = new ArtistFragment();
+						FArtist fragment = new FArtist();
 						fragment.setUrl(ApiUrl.getAllArtistNameUrl(ApiUrl.ORDER_BY_ARTIST_VIDEO_COUNT, -1));
 						
 						// Insert the fragment by replacing any existing
@@ -228,51 +261,63 @@ public class MainActivity extends SherlockFragmentActivity implements
 				})
 		);
 
-		// Create & Add Items "Video nổi bật"
-		mSlidingMenuListItems.add(new SlidingMenuListItem(
-				SlidingMenuListItem.SCREEN_IN_CATEGORY,
-				R.drawable.ic_menu_top,
-				this.getString(R.string.sliding_menu_lable_top_videos),
-				"",
-				new OnSlidingMenuItemClickedListener() {
-					@Override
-					public void doAction() {
-						// close the sliding menu
-						mLeftSlidingMenu.toggle();
-						
-						Intent i = new Intent(getApplicationContext(), PagerListVideoActivity.class);
-						i.putExtra(PagerListVideoActivity.STR_URL, ApiUrl.getTopVideoUrl(ApiUrl.ORDER_BY_VIDEO_RATING, -1));
-						i.putExtra(PagerListVideoActivity.STR_ACTION_BAR_TITLE, getResources().getString(R.string.sliding_menu_lable_top_videos));
-						i.putExtra(PagerListVideoActivity.STR_DEFAULT_PAGE_INDEX, 0);
-						startActivity(i);						
-					}
-				})
-		);
-
 		// Create & Add Items "Video mới"
-		mSlidingMenuListItems.add(new SlidingMenuListItem(
-				SlidingMenuListItem.SCREEN_IN_CATEGORY,
+		mSlidingMenuListItems.add(new MSlidingMenuListItem(
+				MSlidingMenuListItem.ITEM_TYPE_SCREEN_IN_CATEGORY,
 				R.drawable.ic_menu_new,
 				this.getString(R.string.sliding_menu_lable_new_videos),
 				"",
 				new OnSlidingMenuItemClickedListener() {
 					@Override
 					public void doAction() {
-						// close the sliding menu
-						mLeftSlidingMenu.toggle();
+						// Create a new fragment and specify the planet to show
+						// based on position
+						FLoadmoreListVideo fragment = new FLoadmoreListVideo();
+						fragment.setUrl(ApiUrl.getNewVideosUrl(-1));
 						
-						Intent i = new Intent(getApplicationContext(), PagerListVideoActivity.class);
-						i.putExtra(PagerListVideoActivity.STR_URL, ApiUrl.getNewVideoUrl(ApiUrl.ORDER_BY_VIDEO_RATING, -1));
-						i.putExtra(PagerListVideoActivity.STR_ACTION_BAR_TITLE, getResources().getString(R.string.sliding_menu_lable_new_videos));
-						i.putExtra(PagerListVideoActivity.STR_DEFAULT_PAGE_INDEX, 2);
-						startActivity(i);					
+						// Insert the fragment by replacing any existing
+						// fragment
+						mFragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
+
+						// Rename the action bar
+						getSupportActionBar().setTitle(R.string.sliding_menu_lable_new_videos);
+						
+						// close the sliding menu
+						mLeftSlidingMenu.toggle();				
+					}
+				})
+		);
+		
+		// Create & Add Items "Video nổi bật"
+		mSlidingMenuListItems.add(new MSlidingMenuListItem(
+				MSlidingMenuListItem.ITEM_TYPE_SCREEN_IN_CATEGORY,
+				R.drawable.ic_menu_top,
+				this.getString(R.string.sliding_menu_lable_top_videos),
+				"",
+				new OnSlidingMenuItemClickedListener() {
+					@Override
+					public void doAction() {
+						// Create a new fragment and specify the planet to show
+						// based on position
+						FLoadmoreListVideo fragment = new FLoadmoreListVideo();
+						fragment.setUrl(ApiUrl.getTopVideoUrl(-1));
+						
+						// Insert the fragment by replacing any existing
+						// fragment
+						mFragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
+
+						// Rename the action bar
+						getSupportActionBar().setTitle(R.string.sliding_menu_lable_top_videos);
+						
+						// close the sliding menu
+						mLeftSlidingMenu.toggle();				
 					}
 				})
 		);
 
 		// Create & Add Items "Video Ngẫu nhiên"
-		mSlidingMenuListItems.add(new SlidingMenuListItem(
-				SlidingMenuListItem.SCREEN_IN_CATEGORY,
+		mSlidingMenuListItems.add(new MSlidingMenuListItem(
+				MSlidingMenuListItem.ITEM_TYPE_SCREEN_IN_CATEGORY,
 				R.drawable.ic_menu_random,
 				this.getString(R.string.sliding_menu_lable_random_videos),
 				"",
@@ -282,19 +327,42 @@ public class MainActivity extends SherlockFragmentActivity implements
 						// close the sliding menu
 						mLeftSlidingMenu.toggle();
 						
-						Intent i = new Intent(getApplicationContext(), PagerListVideoActivity.class);
-						i.putExtra(PagerListVideoActivity.STR_URL, ApiUrl.getRandomVideoUrl(ApiUrl.ORDER_BY_VIDEO_RATING, -1));
-						i.putExtra(PagerListVideoActivity.STR_ACTION_BAR_TITLE,getResources().getString(R.string.sliding_menu_lable_random_videos));
-						i.putExtra(PagerListVideoActivity.STR_DEFAULT_PAGE_INDEX, 3);
-						startActivity(i);
+						ServiceGetRandomVideo service = new ServiceGetRandomVideo();
+						service.addOnGetJsonListener(new OnGetJsonListener() {
+							
+							@Override
+							public void onGetJsonFail(String response) {
+								// TODO Auto-generated method stub
+								
+							}
+							
+							@Override
+							public void onGetJsonCompleted(String response) {
+								try {
+									JSONObject json = new JSONObject(response);
+									JSONArray array = json.getJSONArray("videos");
+									JSONObject videoJsonObject = array.getJSONObject(0);
+									String uniq_id = videoJsonObject.getString("uniq_id");
+									
+									// Start activity
+									Intent i = new Intent(MainActivity.this, FullVideoInfoActivity.class);
+									i.putExtra(FullVideoInfoActivity.INFO_VIDEO_UNIQUE_ID, uniq_id);
+									startActivity(i);
+								} catch (Exception e) {
+									
+								}
+							}
+						});
+						
+						service.getRandomVideo();
 					}
 				})
 		);
 		
 
 		// Create & Add Items CATEGORY "ỨNG DỤNG"
-		mSlidingMenuListItems.add(new SlidingMenuListItem(
-				SlidingMenuListItem.CATEGORY_NAME,
+		mSlidingMenuListItems.add(new MSlidingMenuListItem(
+				MSlidingMenuListItem.ITEM_TYPE_CATEGORY_NAME,
 				0,
 				this.getString(R.string.sliding_menu_category_aplication),
 				"",
@@ -302,8 +370,8 @@ public class MainActivity extends SherlockFragmentActivity implements
 		);
 		
 		// Create & Add Items "Cài đặt"
-		mSlidingMenuListItems.add(new SlidingMenuListItem(
-				SlidingMenuListItem.SCREEN_IN_CATEGORY,
+		mSlidingMenuListItems.add(new MSlidingMenuListItem(
+				MSlidingMenuListItem.ITEM_TYPE_SCREEN_IN_CATEGORY,
 				R.drawable.ic_menu_setting,
 				this.getString(R.string.sliding_menu_lable_setting),
 				"",
@@ -312,7 +380,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 					public void doAction() {
 						// Create a new fragment and specify the planet to show
 						// based on position
-						SettingFragment fragment = new SettingFragment();
+						FSetting fragment = new FSetting();
 								
 						// Insert the fragment by replacing any existing
 						// fragment
@@ -328,8 +396,8 @@ public class MainActivity extends SherlockFragmentActivity implements
 		);
 
 		// Create & Add Items "Giới thiệu"
-		mSlidingMenuListItems.add(new SlidingMenuListItem(
-				SlidingMenuListItem.SCREEN_IN_CATEGORY,
+		mSlidingMenuListItems.add(new MSlidingMenuListItem(
+				MSlidingMenuListItem.ITEM_TYPE_SCREEN_IN_CATEGORY,
 				R.drawable.ic_menu_introduce,
 				this.getString(R.string.sliding_menu_lable_introduce),
 				"",
@@ -338,7 +406,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 					public void doAction() {
 						// Create a new fragment and specify the planet to show
 						// based on position
-						IntroduceFragment fragment = new IntroduceFragment();
+						FIntroduce fragment = new FIntroduce();
 								
 						// Insert the fragment by replacing any existing
 						// fragment
@@ -353,25 +421,25 @@ public class MainActivity extends SherlockFragmentActivity implements
 				})
 		);
 		
-		// Create & Add Items "Liên hệ"
-		mSlidingMenuListItems.add(new SlidingMenuListItem(
-				SlidingMenuListItem.SCREEN_IN_CATEGORY,
-				R.drawable.ic_menu_contact,
-				this.getString(R.string.sliding_menu_lable_contact),
+		// Create & Add Items "Ủng hộ"
+		mSlidingMenuListItems.add(new MSlidingMenuListItem(
+				MSlidingMenuListItem.ITEM_TYPE_SCREEN_IN_CATEGORY,
+				R.drawable.ic_menu_donate,
+				this.getString(R.string.sliding_menu_lable_donate),
 				"",
 				new OnSlidingMenuItemClickedListener() {
 					@Override
 					public void doAction() {
 						// Create a new fragment and specify the planet to show
 						// based on position
-						ContactFragment fragment = new ContactFragment();
+						FDonate fragment = new FDonate();
 								
 						// Insert the fragment by replacing any existing
 						// fragment
 						mFragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
 
 						// Rename the action bar
-						getSupportActionBar().setTitle(R.string.sliding_menu_lable_contact);
+						getSupportActionBar().setTitle(R.string.sliding_menu_lable_donate);
 								
 						// close the sliding menu
 						mLeftSlidingMenu.toggle();
@@ -381,8 +449,8 @@ public class MainActivity extends SherlockFragmentActivity implements
 		
 		
 		// Create & Add Items "Đóng ứng dụng"
-		mSlidingMenuListItems.add(new SlidingMenuListItem(
-				SlidingMenuListItem.SCREEN_IN_CATEGORY,
+		mSlidingMenuListItems.add(new MSlidingMenuListItem(
+				MSlidingMenuListItem.ITEM_TYPE_SCREEN_IN_CATEGORY,
 				R.drawable.ic_menu_shoutdown,
 				this.getString(R.string.sliding_menu_lable_shoutdown),
 				"",
@@ -502,7 +570,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 	@Override
 	public void onConnectionStatusChange() {
 		// TODO Auto-generated method stub
-		if (ConnectionUtil.getConnectivityStatus(this) == ConnectionUtil.TYPE_NOT_CONNECTED) {
+		if (UtilConnection.getConnectivityStatus(this) == UtilConnection.TYPE_NOT_CONNECTED) {
 			this.findViewById(R.id.layoutConnectionError).setVisibility(View.VISIBLE);
 			this.findViewById(R.id.layoutConnectionError).startAnimation(AnimationUtils.loadAnimation(this, R.animator.appear));
 		} else {

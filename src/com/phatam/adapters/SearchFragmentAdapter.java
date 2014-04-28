@@ -23,24 +23,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.phatam.fragment.ArtistFragment;
-import com.phatam.fragment.LoadmoreListVideoFragment;
+import com.phatam.fragment.FArtist;
+import com.phatam.fragment.FLoadmoreListVideo;
 import com.phatam.websevice.ApiUrl;
 
 public class SearchFragmentAdapter extends FragmentPagerAdapter {
     protected static final String[] CONTENT = new String[] { "VIDEO", "TÁC GIẢ" };
     private int mCount = CONTENT.length;
     private String mKeyWord;
-    private LoadmoreListVideoFragment mFragmentVideoResult;
-    private ArtistFragment mFragmentAuthorResult;
+    private FLoadmoreListVideo mFragmentVideoResult;
+    private FArtist mFragmentAuthorResult;
 
     public SearchFragmentAdapter(FragmentManager fm, String pKeyWord) {
         super(fm);
         mKeyWord = pKeyWord.replace(" ", "%20");
         
-        mFragmentVideoResult = new LoadmoreListVideoFragment().setUrl(ApiUrl.getSearchVideoUrl(mKeyWord, ApiUrl.ORDER_BY_UPLOAD_DATE, -1));
+        mFragmentVideoResult = new FLoadmoreListVideo().setUrl(ApiUrl.getSearchVideoUrl(mKeyWord, ApiUrl.ORDER_BY_UPLOAD_DATE, -1));
         
-        mFragmentAuthorResult = new ArtistFragment().setUrl(ApiUrl.getSerchArtistNameUrl(mKeyWord, ApiUrl.ORDER_BY_ARTIST_NAME, -1));
+        mFragmentAuthorResult = new FArtist().setUrl(ApiUrl.getSerchArtistNameUrl(mKeyWord, ApiUrl.ORDER_BY_ARTIST_NAME, -1));
     }
     
     public void onKeyWordChange(String newKeyword) {

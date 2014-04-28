@@ -24,7 +24,6 @@
     android:background="#e2e2e2"
     android:clipToPadding="false"
     android:divider="@null"
-    android:dividerHeight="4dp"
+    android:dividerHeight="2dp"
     android:fadingEdge="none"
-    android:padding="8dp"
     android:scrollbarStyle="outsideOverlay" />

@@ -25,7 +25,7 @@ DONE:
 3. GET all artist with ORDER_BY and OFFSET
 * http://phatam.com/rest/public/index.php/artist/ORDER_BY/OFFSET
 ** ORDER_BY:	
-		"cnt" - sort by Video name;
+		"cnt" - sort by the number of artist's video;
 		"artist" - sort by the artist name;
 ** OFFSET = page_index * 20 (page_index grown from 0 and will have 20 results per page)
 

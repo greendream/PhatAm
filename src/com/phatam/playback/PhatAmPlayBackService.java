@@ -48,6 +48,7 @@ public class PhatAmPlayBackService extends Service {
 	private String mVideoTitle = "";
 	private String mVideoArtist = "";
 	
+	public static PhatAmPlayBackService instance;
 	
 	public static void setMediaPlayer(MediaPlayer mp) {
 		mMediaPlayer = mp;
@@ -92,6 +93,8 @@ public class PhatAmPlayBackService extends Service {
 	public void onCreate() {
 		super.onCreate();
 
+		instance = this;
+		
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(BROADCAST_PLAYBACK_STOP);
 		intentFilter.addAction(BROADCAST_PLAYBACK_PAUSE);
@@ -101,8 +104,12 @@ public class PhatAmPlayBackService extends Service {
 	@Override
 	public void onDestroy() // called when the service is stopped
 	{
-		stopForeground(true);
-		unregisterReceiver(broadcastReceiver);
+		try {
+			stopForeground(true);
+			unregisterReceiver(broadcastReceiver);
+		} catch (Exception e) {
+			
+		}
 		super.onDestroy();
 	}
 
